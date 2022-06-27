@@ -13,7 +13,7 @@ const ViewNFT: React.FC<{nft: NFTData}> = ({ nft }) => {
     value: string;
     trait_type: string
   }) => {
-    return <InfoElement name={attr.trait_type} data={attr.value} />
+    return <InfoElement name={attr.trait_type} data={attr.value} key={attr.trait_type} />
   })
 
   return (<div className='border text-left'>

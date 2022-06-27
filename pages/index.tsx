@@ -10,7 +10,7 @@ import ViewNFT from '../components/ViewNFT'
 export async function getStaticProps () {
   const targetChain = web3config.targetChain
   const sdk = new ThirdwebSDK(web3config.targetChain)
-  const contract = sdk.getNFTCollection(nftContracts[targetChain].contracts.NFTree.address)
+  const contract = sdk.getNFTCollection(nftContracts[targetChain].contracts.NFTREE.address)
   const allNfts = await contract.getAll()
   // Pass data to the page via props
   return { props: { allNfts: JSON.stringify(allNfts) } }
@@ -19,7 +19,7 @@ export async function getStaticProps () {
 const Home: NextPage<{allNfts: string}> = (props) => {
   const allNfts = JSON.parse(props.allNfts) as NFTData[]
   const nfts = allNfts.map((nft: NFTData) => {
-    return <ViewNFT nft={nft} />
+    return <ViewNFT nft={nft} key={nft.metadata.id.hex} />
   })
 
   return (
@@ -28,9 +28,6 @@ const Home: NextPage<{allNfts: string}> = (props) => {
         🌳 NFTree Collection 🌳
       </div>
       {nfts}
-        <div className="text-3xl">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </div>
     </div>
   )
 }
