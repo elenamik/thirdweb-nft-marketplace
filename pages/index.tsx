@@ -35,14 +35,13 @@ export async function getStaticProps () {
  */
 const Home: NextPage<{allNFTrees: string, listings: string }> = (props) => {
   const listings = JSON.parse(props.listings) as Listing[]
-  console.log('LISTINGS', listings)
   const viewListings = listings.map((listing: Listing) => {
     return <ViewListing listing={listing} key={listing.id} />
   })
 
   return (
     <div className="m-2 text-center">
-      <div className="text-3xl text-center" >
+      <div className="text-3xl text-center font-extrabold" >
         🥳 MY NFT Marketplace 🥳
       </div>
       {viewListings}

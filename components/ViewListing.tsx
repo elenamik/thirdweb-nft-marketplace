@@ -1,17 +1,18 @@
 import { BigNumber } from 'ethers'
 import * as React from 'react'
 import { Listing } from '../types/Listing'
-import ViewNFT, { InfoElement } from './ViewNFT'
+import InfoElement from './InfoElement'
+import ViewNFT from './ViewNFT'
 
 const ViewListing: React.FC<{listing: Listing}> = ({ listing }) => {
-  console.log('LISTING', listing)
   return (
-      <div className='border text-left'>
+      <div className='border-8 text-left p-8 border-4 rounded-3xl m-4'>
+          <div className="text-2xl font-semibold">{listing.asset.name}</div>
           <InfoElement name="price" data={BigNumber.from(listing.buyoutPrice).toString()} />
           <InfoElement name="seller" data={listing.sellerAddress} />
           <InfoElement name="quantity" data={BigNumber.from(listing.quantity).toString()} />
 
-          <div className="px-5">
+          <div className="">
           <ViewNFT nft={listing.asset} key={listing.asset.id.hex} />
         </div>
     </div>
