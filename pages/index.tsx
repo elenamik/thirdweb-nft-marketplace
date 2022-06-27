@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import web3config from '../web3config.json'
 import nftContracts from '../contracts/nftContracts.json'
 import marketPlaceContracts from '../contracts/marketplace.json'
-import { ThirdwebSDK } from '@thirdweb-dev/sdk'
+import { NFTCollection, ThirdwebSDK } from '@thirdweb-dev/sdk'
 import * as React from 'react'
 import { Listing } from '../types/Listing'
 import ViewListing from '../components/ViewListing'
@@ -14,7 +14,7 @@ export async function getStaticProps () {
   const sdk = new ThirdwebSDK(web3config.targetChain)
 
   // @ts-ignore TODO: resolve this type error
-  const nftTreeContract = sdk.getNFTCollection(nftContracts[targetChain].contracts.NFTREE.address)
+  const nftTreeContract: NFTCollection = sdk.getNFTCollection(nftContracts[targetChain].contracts.NFTREE.address)
   const allNFTrees = await nftTreeContract.getAll()
 
   // @ts-ignore TODO: resolve this type error
@@ -32,17 +32,30 @@ export async function getStaticProps () {
  * can we generate types from ABIS?
  * how attentive do we want to do to typing
  * weird typing errors
+ *
+ *
+ * // show nfts in wallet and give list function
+ * // buy NFT ability
  */
+
 const Home: NextPage<{allNFTrees: string, listings: string }> = (props) => {
   const listings = JSON.parse(props.listings) as Listing[]
   const viewListings = listings.map((listing: Listing) => {
     return <ViewListing listing={listing} key={listing.id} />
   })
+  const [s, setS] = React.useState('')
+
+  React.useEffect(() => {
+    // if (typeof window !== 'undefined') {
+    setS('hello')
+    // }
+  }, [])
 
   return (
     <div className="m-2 text-center">
       <div className="text-3xl text-center font-extrabold" >
         🥳 MY NFT Marketplace 🥳
+        s: {s}
       </div>
       {viewListings}
     </div>
