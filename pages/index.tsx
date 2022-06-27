@@ -10,15 +10,17 @@ import ViewNFT from '../components/ViewNFT'
 export async function getStaticProps () {
   const targetChain = web3config.targetChain
   const sdk = new ThirdwebSDK(web3config.targetChain)
-  const contract = sdk.getNFTCollection(nftContracts[targetChain].contracts.NFTREE.address)
-  const allNfts = await contract.getAll()
+
+  // @ts-ignore TODO: resolve this type error
+  const nftTreeContract = sdk.getNFTCollection(nftContracts[targetChain].contracts.NFTREE.address)
+  const allNFTrees = await nftTreeContract.getAll()
   // Pass data to the page via props
-  return { props: { allNfts: JSON.stringify(allNfts) } }
+  return { props: { allNFTrees: JSON.stringify(allNFTrees) } }
 }
 
-const Home: NextPage<{allNfts: string}> = (props) => {
-  const allNfts = JSON.parse(props.allNfts) as NFTData[]
-  const nfts = allNfts.map((nft: NFTData) => {
+const Home: NextPage<{allNFTrees: string}> = (props) => {
+  const allNFTrees = JSON.parse(props.allNFTrees) as NFTData[]
+  const nfts = allNFTrees.map((nft: NFTData) => {
     return <ViewNFT nft={nft} key={nft.metadata.id.hex} />
   })
 
