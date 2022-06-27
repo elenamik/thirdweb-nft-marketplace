@@ -2,9 +2,8 @@ import type { NextPage } from 'next'
 import web3config from '../web3config.json'
 import nftContracts from '../contracts/nftContracts.json'
 import marketPlaceContracts from '../contracts/marketplace.json'
-import { NFTCollection, ThirdwebSDK } from '@thirdweb-dev/sdk'
+import { NFTCollection, ThirdwebSDK, DirectListing } from '@thirdweb-dev/sdk'
 import * as React from 'react'
-import { Listing } from '../types/Listing'
 import ViewListing from '../components/ViewListing'
 
 // This gets called on every request
@@ -26,36 +25,23 @@ export async function getStaticProps () {
 }
 
 /***
- * Q's:
- * is getStaticProps the right approach?
- * approach of adding config for chains + contracts in contracts/config.
- * can we generate types from ABIS?
- * how attentive do we want to do to typing
- * weird typing errors
- *
- *
+ * TODOS:
+ * // typing issues with NFTMetaData - _hex and attributes
  * // show nfts in wallet and give list function
  * // buy NFT ability
+ * // switch to server props
  */
 
 const Home: NextPage<{allNFTrees: string, listings: string }> = (props) => {
-  const listings = JSON.parse(props.listings) as Listing[]
-  const viewListings = listings.map((listing: Listing) => {
+  const listings = JSON.parse(props.listings) as DirectListing[]
+  const viewListings = listings.map((listing: DirectListing) => {
     return <ViewListing listing={listing} key={listing.id} />
   })
-  const [s, setS] = React.useState('')
-
-  React.useEffect(() => {
-    // if (typeof window !== 'undefined') {
-    setS('hello')
-    // }
-  }, [])
 
   return (
     <div className="m-2 text-center">
       <div className="text-3xl text-center font-extrabold" >
         🥳 MY NFT Marketplace 🥳
-        s: {s}
       </div>
       {viewListings}
     </div>

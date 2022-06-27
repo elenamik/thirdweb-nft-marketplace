@@ -1,10 +1,10 @@
 import { BigNumber } from 'ethers'
 import * as React from 'react'
-import { Listing } from '../types/Listing'
 import InfoElement from './InfoElement'
 import ViewNFT from './ViewNFT'
+import { DirectListing } from '@thirdweb-dev/sdk/dist/node'
 
-const ViewListing: React.FC<{listing: Listing}> = ({ listing }) => {
+const ViewListing: React.FC<{listing: DirectListing}> = ({ listing }) => {
   return (
       <div className='border-8 text-left p-8 border-4 rounded-3xl m-4'>
           <div className="text-2xl font-semibold">{listing.asset.name}</div>
@@ -13,7 +13,7 @@ const ViewListing: React.FC<{listing: Listing}> = ({ listing }) => {
           <InfoElement name="quantity" data={BigNumber.from(listing.quantity).toString()} />
 
           <div className="">
-          <ViewNFT nft={listing.asset} key={listing.asset.id.hex} />
+          <ViewNFT nft={listing.asset} key={listing.asset.id._hex} />
         </div>
     </div>
   )
