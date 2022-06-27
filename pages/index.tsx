@@ -25,6 +25,14 @@ export async function getStaticProps () {
   return { props: { allNFTrees: JSON.stringify(allNFTrees), listings: JSON.stringify(listings) } }
 }
 
+/***
+ * Q's:
+ * is getStaticProps the right approach?
+ * approach of adding config for chains + contracts in contracts/config.
+ * can we generate types from ABIS?
+ * how attentive do we want to do to typing
+ * weird typing errors
+ */
 const Home: NextPage<{allNFTrees: string, listings: string }> = (props) => {
   const listings = JSON.parse(props.listings) as Listing[]
   console.log('LISTINGS', listings)
