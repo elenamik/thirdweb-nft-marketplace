@@ -1,30 +1,24 @@
 import { BigNumber } from 'ethers'
 import * as React from 'react'
-import { NFTData } from '../types/NFTData'
+import InfoElement from './InfoElement'
+import { NFTMetadata } from '@thirdweb-dev/sdk'
 
-const InfoElement: React.FC<{name: string, data:string}> = ({ name, data }) => {
-  return <div className="p-1 text-left">
-  {name}: {data}
-</div>
-}
-
-const ViewNFT: React.FC<{nft: NFTData}> = ({ nft }) => {
-  const attributes = nft.metadata.attributes.map((attr: {
+const ViewNFT: React.FC<{nft: NFTMetadata}> = ({ nft }) => {
+  const attributes = nft.attributes?.map((attr: {
     value: string;
     trait_type: string
   }) => {
     return <InfoElement name={attr.trait_type} data={attr.value} key={attr.trait_type} />
   })
+  console.log(nft)
 
-  return (<div className='border text-left'>
-    <div className="text-2xl text-center">{nft.metadata.name}</div>
+  return (<div className='text-left'>
     <div className="flex flex-row">
-      <img className="max-w-sm" src={nft.metadata.image}/>
+      <img className="max-w-sm" src={nft.image!}/>
       <div className="px-5">
-        <InfoElement name="owner" data={nft.owner} />
-        <InfoElement name="description" data={nft.metadata.description} />
-        <InfoElement name="id" data={BigNumber.from(nft.metadata.id.hex).toString()} />
-        <div>Attributes:
+        <InfoElement name="description" data={nft.description!} />
+        <InfoElement name="id" data={BigNumber.from(nft.id.hex).toString()} />
+        <div><span className="font-bold">Attributes</span>
           {attributes}
         </div>
       </div>
