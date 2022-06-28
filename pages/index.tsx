@@ -42,8 +42,8 @@ const Home: NextPage<{allNFTrees: string, listings: string }> = (props) => {
     <div id="container" className="font-roboto">
       <div id="hero" className="bg-slate-100 pt-6 px-6 pb-2 flex flex-row justify-between">
         <span id="hero-logo" className="text-5xl font-extrabold text-left text-slate-700 font-josephin font-semibold">ThirdSea</span>
-        <div id="nav" className="">
-            <button id="wallet" className="">Connect Wallet</button>
+        <div id="nav" className="flex flex-row">
+            <button id="wallet" className="bg-slate-700 text-slate-50 text-lg font-medium p-2 rounded-3xl ">Connect Wallet</button>
           </div>
       </div>
       <div>
