@@ -8,8 +8,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        josephin: ['Josefin Sans', 'sans-serif'],
-        roboto: ['Roboto', 'sans-serif']
+        josephin: ['Josefin Sans', 'sans-serif']
       }
     }
   },
