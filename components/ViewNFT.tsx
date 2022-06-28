@@ -10,8 +10,6 @@ const ViewNFT: React.FC<{nft: NFTMetadata}> = ({ nft }) => {
   }) => {
     return <InfoElement name={attr.trait_type} data={attr.value} key={attr.trait_type} />
   })
-  console.log(nft)
-
   return (<div className='text-left'>
     <div className="flex flex-row">
       <img className="max-w-sm" src={nft.image!}/>
