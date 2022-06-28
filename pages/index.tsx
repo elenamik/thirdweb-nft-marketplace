@@ -39,11 +39,16 @@ const Home: NextPage<{allNFTrees: string, listings: string }> = (props) => {
   })
 
   return (
-    <div className="m-2 text-center">
-      <div className="text-3xl text-center font-extrabold" >
-        🥳 MY NFT Marketplace 🥳
+    <div id="container" className="font-roboto">
+      <div id="hero" className="bg-slate-100 pt-6 px-6 pb-2 flex flex-row justify-between">
+        <span id="hero-logo" className="text-5xl font-extrabold text-left text-slate-700 font-josephin font-semibold">ThirdSea</span>
+        <div id="nav" className="">
+            <button id="wallet" className="">Connect Wallet</button>
+          </div>
       </div>
-      {viewListings}
+      <div>
+        {viewListings}
+      </div>
     </div>
   )
 }
