@@ -13,10 +13,8 @@ const ViewListing: React.FC<{listing: DirectListing}> = ({ listing }) => {
 
   React.useEffect(() => {
     const closeViewMore = (event: PointerEvent) => {
-      console.log('E', event.target)
-      console.log('REF', ref.current)
       // @ts-ignore
-      if (viewMore & !ref.current.contains(event.target)) {
+      if (!ref.current.contains(event.target)) {
         setViewMore(false)
       }
     }
