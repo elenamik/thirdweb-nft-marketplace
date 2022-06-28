@@ -3,6 +3,7 @@ import web3config from '../web3config.json'
 import nftContracts from '../contracts/nftContracts.json'
 import marketPlaceContracts from '../contracts/marketplace.json'
 import { NFTCollection, ThirdwebSDK, DirectListing } from '@thirdweb-dev/sdk'
+
 import * as React from 'react'
 import ViewListing from '../components/ViewListing'
 
@@ -33,6 +34,8 @@ export async function getStaticProps () {
  */
 
 const Home: NextPage<{allNFTrees: string, listings: string }> = (props) => {
+  // const connectWithMetamask = useMetamask()
+
   const listings = JSON.parse(props.listings) as DirectListing[]
   const viewListings = listings.map((listing: DirectListing) => {
     return <ViewListing listing={listing} key={listing.id} />
