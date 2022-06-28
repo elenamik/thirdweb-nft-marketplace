@@ -3,10 +3,7 @@ import Link from 'next/link'
 import * as React from 'react'
 import { useMetamask, useAddress, useDisconnect } from '@thirdweb-dev/react'
 import { useRouter } from 'next/router'
-
-const formatDisplayAddress = (address:string):string => {
-  return address.slice(0, 6).concat('...').concat(address.slice(-4))
-}
+import { formatDisplayAddress } from '../web3utils'
 
 const Header: React.FC = (props) => {
   const connectWithMetamask = useMetamask()
@@ -15,7 +12,6 @@ const Header: React.FC = (props) => {
   const router = useRouter()
 
   return (
-
       <div id="hero" className="bg-slate-100 pt-6 px-6 pb-2 flex flex-row justify-between">
         <span onClick={() => { router.push('/') }} id="hero-logo" className="text-5xl font-extrabold text-left text-slate-700 font-josephin font-semibold">ThirdSea</span>
         <div id="nav" className="flex flex-row">

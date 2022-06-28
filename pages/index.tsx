@@ -10,6 +10,7 @@ import ViewListing from '../components/ViewListing'
 import { AuctionListing, DirectListing } from '@thirdweb-dev/sdk/dist/src/types/marketplace'
 import { MarketPlaceContractAddress } from '../config/contractAddresses'
 import { targetChain } from '../config/targetChain'
+import { useChainId } from '@thirdweb-dev/react'
 
 /***
  * TODOS:
@@ -17,7 +18,7 @@ import { targetChain } from '../config/targetChain'
  * // show NFTs in wallet
  * // give ability to list
  * // buy NFT ability
- * // can get desiredChainID from the context?
+ * // can get desiredChainID from the context? rn its hardcoded wrong in index.tsx
  */
 
 const Home: NextPage = () => {
@@ -36,9 +37,8 @@ const Home: NextPage = () => {
       Loading...
     </div>)
   }
-
   return (
-    <div>{
+    <div className="flex flex-wrap justify-center">{
       activeListingsQueryState.data?.map((listing:any) => {
         return <ViewListing listing={listing} key={listing.id} />
       })
