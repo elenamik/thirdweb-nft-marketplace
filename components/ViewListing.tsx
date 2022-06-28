@@ -11,7 +11,6 @@ const ViewListing: React.FC<{listing: DirectListing}> = ({ listing }) => {
           <InfoElement name="price" data={BigNumber.from(listing.buyoutPrice).toString()} />
           <InfoElement name="seller" data={listing.sellerAddress} />
           <InfoElement name="quantity" data={BigNumber.from(listing.quantity).toString()} />
-
           <div className="">
           <ViewNFT nft={listing.asset} key={listing.asset.id._hex} />
         </div>
