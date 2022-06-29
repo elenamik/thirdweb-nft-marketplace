@@ -63,11 +63,7 @@ const ListingPage: NextPage = () => {
   });
 
   const handleBuy = async (event: DirectListing) => {
-    console.log(event);
-    console.log("SDK", sdk);
-    console.log("CONTRACT", marketplaceContract);
     const result = await marketplaceContract.buyoutListing(event.id, 1);
-    console.log("RESULT", result);
   };
 
   if (listingQuery.isLoading) {
