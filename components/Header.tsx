@@ -21,7 +21,7 @@ const Header: React.FC = () => {
           router.push("/");
         }}
         id="hero-logo"
-        className="text-left font-josephin text-5xl font-extrabold font-semibold text-slate-700"
+        className="text-left font-josephin text-5xl font-bold text-slate-700"
       >
         ThirdSea
       </span>
