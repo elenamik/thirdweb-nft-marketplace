@@ -4,7 +4,11 @@
         "es2021": true
     },
     "extends": [
-        "standard"
+        "plugin:prettier/recommended",
+        "plugin:tailwindcss/recommended",
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -12,7 +16,10 @@
         "sourceType": "module"
     },
     "plugins": [
-        "@typescript-eslint"
+        "prettier",
+        "@typescript-eslint",
+        "react",
+        "tailwindcss"
     ],
     "rules": {
     }
