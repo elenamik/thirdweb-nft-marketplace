@@ -31,6 +31,7 @@ const ListingPage: NextPage = () => {
   });
 
   const handleBuy = async (event: DirectListing) => {
+    console.log(event);
     const result = await marketplaceContract.buyoutListing(event.id, 1);
     console.log("RESULT", result);
   };
@@ -52,7 +53,7 @@ const ListingPage: NextPage = () => {
         src={listing?.asset.image!}
       />
       <div id="listing-data" className="w-3/4 p-2 align-middle text-slate-900">
-        <ListingData listing={listing} handleBuy={handleBuy} />
+        <ListingData listing={listing} handleBuy={() => handleBuy(listing)} />
       </div>
     </div>
   );
