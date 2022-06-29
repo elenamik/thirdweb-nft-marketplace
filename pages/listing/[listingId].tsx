@@ -45,16 +45,13 @@ const ListingPage: NextPage = () => {
   }
   const listing = listingQuery.data;
   return (
-    <div id="container" className="flex flex-row p-6">
+    <div id="container" className="flex w-full flex-row p-6 px-10">
       <img
         id="image"
         className="max-w-xl rounded-3xl border-4"
         src={listing?.asset.image!}
       />
-      <div
-        id="listing-data"
-        className="flex-flow flex w-full justify-between pt-2"
-      >
+      <div id="listing-data" className="w-3/4 p-2 align-middle text-slate-900">
         <ListingData listing={listing} handleBuy={handleBuy} />
       </div>
     </div>

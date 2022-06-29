@@ -28,7 +28,7 @@ const PreviewListing: React.FC<{ listing: AuctionListing | DirectListing }> = ({
       />
       <div
         id="image-metadata"
-        className="space-between flex justify-between rounded-b-3xl border-0 bg-slate-300 p-3 text-slate-700"
+        className="space-between flex justify-between rounded-b-3xl border-0 bg-slate-300 p-3 text-slate-900"
       >
         <ListingData
           listing={listing}
