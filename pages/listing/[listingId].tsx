@@ -11,6 +11,7 @@ import {
 import { BigNumber } from "ethers";
 import * as React from "react";
 import { ListingData } from "../../components/ListingData";
+import LargeInfoText from "../../components/LargeInfoText";
 
 const ListingPage: NextPage = () => {
   const router = useRouter();
@@ -21,7 +22,6 @@ const ListingPage: NextPage = () => {
   );
 
   const { listingId } = router.query as { listingId: string };
-  console.log("listing ID", listingId);
 
   const listingQuery = useQuery<AuctionListing | DirectListing>({
     queryFn: () => {
@@ -29,17 +29,19 @@ const ListingPage: NextPage = () => {
     },
     enabled: !!listingId,
   });
+
+  const handleBuy = async (event: DirectListing) => {
+    const result = await marketplaceContract.buyoutListing(event.id, 1);
+    console.log("RESULT", result);
+  };
+
   if (listingQuery.isLoading) {
     return (
       <div className="p-6 font-josephin text-2xl font-semibold">Loading...</div>
     );
   }
   if (listingQuery.isError || (listingQuery.isSuccess && !listingQuery.data)) {
-    return (
-      <div className="p-6 font-josephin text-2xl font-semibold">
-        Error Loading Listing
-      </div>
-    );
+    return <LargeInfoText message={"Error Loading Listing"} />;
   }
   const listing = listingQuery.data;
   return (
@@ -53,7 +55,7 @@ const ListingPage: NextPage = () => {
         id="listing-data"
         className="flex-flow flex w-full justify-between pt-2"
       >
-        <ListingData listing={listing} />
+        <ListingData listing={listing} handleBuy={handleBuy} />
       </div>
     </div>
   );

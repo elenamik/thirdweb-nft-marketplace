@@ -11,6 +11,7 @@ import {
 } from "@thirdweb-dev/sdk/dist/src/types/marketplace";
 import { MarketPlaceContractAddress } from "../config/contractAddresses";
 import { targetChain } from "../config/targetChain";
+import LargeInfoText from "../components/LargeInfoText";
 
 /***
  * TODOS:
@@ -37,15 +38,13 @@ const Home: NextPage = () => {
   );
 
   if (activeListingsQueryState.isLoading) {
-    return (
-      <div className="p-6 font-josephin text-2xl font-semibold">Loading...</div>
-    );
+    return <LargeInfoText message={"Loading..."} />;
   }
   return (
     <div className="flex flex-wrap justify-center">
       {activeListingsQueryState.data?.map((listing: any) => {
         return <PreviewListing listing={listing} key={listing.id} />;
-      })}{" "}
+      })}
     </div>
   );
 };
