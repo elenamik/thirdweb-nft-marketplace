@@ -1,16 +1,17 @@
-import type { NextPage } from 'next'
-import { ThirdwebSDK } from '@thirdweb-dev/sdk'
+import type { NextPage } from "next";
+import { ThirdwebSDK } from "@thirdweb-dev/sdk";
 
+import { useQuery } from "react-query";
+
+import * as React from "react";
+import ViewListing from "../components/ViewListing";
 import {
-  useQuery
-} from 'react-query'
-
-import * as React from 'react'
-import ViewListing from '../components/ViewListing'
-import { AuctionListing, DirectListing } from '@thirdweb-dev/sdk/dist/src/types/marketplace'
-import { MarketPlaceContractAddress } from '../config/contractAddresses'
-import { targetChain } from '../config/targetChain'
-import { useChainId } from '@thirdweb-dev/react'
+  AuctionListing,
+  DirectListing,
+} from "@thirdweb-dev/sdk/dist/src/types/marketplace";
+import { MarketPlaceContractAddress } from "../config/contractAddresses";
+import { targetChain } from "../config/targetChain";
+import { useChainId } from "@thirdweb-dev/react";
 
 /***
  * TODOS:
@@ -22,28 +23,31 @@ import { useChainId } from '@thirdweb-dev/react'
  */
 
 const Home: NextPage = () => {
-  const sdk = new ThirdwebSDK(targetChain)
-  const marketplaceContract = sdk.getMarketplace(MarketPlaceContractAddress[targetChain])
+  const sdk = new ThirdwebSDK(targetChain);
+  const marketplaceContract = sdk.getMarketplace(
+    MarketPlaceContractAddress[targetChain]
+  );
 
   const activeListingsQueryState = useQuery<(AuctionListing | DirectListing)[]>(
     {
       queryFn: () => {
-        return marketplaceContract.getActiveListings()
-      }
-    })
+        return marketplaceContract.getActiveListings();
+      },
+    }
+  );
 
   if (activeListingsQueryState.isLoading) {
-    return (<div className='text-2xl p-6 font-josephin font-semibold'>
-      Loading...
-    </div>)
+    return (
+      <div className="p-6 font-josephin text-2xl font-semibold">Loading...</div>
+    );
   }
   return (
-    <div className="flex flex-wrap justify-center">{
-      activeListingsQueryState.data?.map((listing:any) => {
-        return <ViewListing listing={listing} key={listing.id} />
-      })
-    } </div>
-  )
-}
+    <div className="flex flex-wrap justify-center">
+      {activeListingsQueryState.data?.map((listing: any) => {
+        return <ViewListing listing={listing} key={listing.id} />;
+      })}{" "}
+    </div>
+  );
+};
 
-export default Home
+export default Home;
