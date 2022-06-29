@@ -11,41 +11,46 @@ const Header: React.FC = () => {
   const disconnectWallet = useDisconnect();
   const router = useRouter();
 
+  const AccountButton: React.FC<{ text: string; handleClick: any }> = ({
+    text,
+    handleClick,
+  }) => {
+    return (
+      <button
+        id="buy-button"
+        onClick={handleClick}
+        className="rounded-3xl bg-slate-400 p-2 text-center text-lg font-semibold text-slate-700 transition ease-in-out hover:border-4 hover:border-slate-700 hover:shadow-lg  active:scale-105"
+      >
+        {text}
+      </button>
+    );
+  };
+
   return (
-    <div
-      id="hero"
-      className="flex flex-row justify-between bg-slate-100 px-6 pt-6 pb-2"
-    >
-      <span
+    <div id="hero" className="flex flex-row justify-between bg-slate-100 p-4">
+      <button
         onClick={() => {
           router.push("/");
         }}
         id="hero-logo"
-        className="text-left font-josephin text-5xl font-bold text-slate-700"
+        className="pt-2 font-josephin text-5xl font-semibold text-slate-700 transition ease-in-out hover:scale-105 active:scale-105"
       >
         ThirdSea
-      </span>
-      <div id="nav" className="flex flex-row">
-        <Link href={"/nfts"}>My Collection</Link>
+      </button>
+      <div id="nav" className="flex flex-row align-middle">
         {!address ? (
-          <button
-            onClick={connectWithMetamask}
-            id="wallet"
-            className="text-md h-12 rounded-3xl bg-slate-700 px-4 font-medium text-slate-50"
-          >
-            Connect Wallet
-          </button>
+          <AccountButton
+            text="Connect Wallet"
+            handleClick={connectWithMetamask}
+          />
         ) : (
-          <div id="account" className="flex align-middle">
-            <button
-              onClick={disconnectWallet}
-              id="disconnect"
-              className="text-md h-12 rounded-3xl bg-slate-700 px-4 font-medium text-slate-50"
-            >
-              Disconnect Wallet
-            </button>
-            <div className="p-2 text-lg font-medium text-slate-700">
-              <span className="text-3xl font-normal">|</span>
+          <div id="account" className="my-auto flex align-middle ">
+            <AccountButton
+              text="Disconnect Wallet"
+              handleClick={disconnectWallet}
+            />
+            <div className="text-lg font-medium text-slate-700">
+              <span className="pl-2 text-3xl font-normal">|</span>
               <span id="address" className="p-2">
                 {formatDisplayAddress(address)}
               </span>
