@@ -4,14 +4,13 @@ import { ThirdwebSDK } from "@thirdweb-dev/sdk";
 import { useQuery } from "react-query";
 
 import * as React from "react";
-import ViewListing from "../components/ViewListing";
+import PreviewListing from "../components/PreviewListing";
 import {
   AuctionListing,
   DirectListing,
 } from "@thirdweb-dev/sdk/dist/src/types/marketplace";
 import { MarketPlaceContractAddress } from "../config/contractAddresses";
 import { targetChain } from "../config/targetChain";
-import { useChainId } from "@thirdweb-dev/react";
 
 /***
  * TODOS:
@@ -24,6 +23,7 @@ import { useChainId } from "@thirdweb-dev/react";
 
 const Home: NextPage = () => {
   const sdk = new ThirdwebSDK(targetChain);
+
   const marketplaceContract = sdk.getMarketplace(
     MarketPlaceContractAddress[targetChain]
   );
@@ -44,7 +44,7 @@ const Home: NextPage = () => {
   return (
     <div className="flex flex-wrap justify-center">
       {activeListingsQueryState.data?.map((listing: any) => {
-        return <ViewListing listing={listing} key={listing.id} />;
+        return <PreviewListing listing={listing} key={listing.id} />;
       })}{" "}
     </div>
   );

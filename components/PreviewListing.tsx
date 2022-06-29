@@ -9,8 +9,12 @@ import {
   useNetwork,
   useNetworkMismatch,
 } from "@thirdweb-dev/react";
+import ListingData from "./ListingData";
+import { AuctionListing } from "@thirdweb-dev/sdk/dist/src/types/marketplace";
 
-const ViewListing: React.FC<{ listing: DirectListing }> = ({ listing }) => {
+const PreviewListing: React.FC<{ listing: AuctionListing | DirectListing }> = ({
+  listing,
+}) => {
   const sdk = new ThirdwebSDK(targetChain);
   const marketplaceContract = sdk.getMarketplace(
     MarketPlaceContractAddress[targetChain]
@@ -60,22 +64,7 @@ const ViewListing: React.FC<{ listing: DirectListing }> = ({ listing }) => {
         id="image-metadata"
         className="space-between flex justify-between rounded-b-3xl border-0 bg-slate-300 p-3 text-slate-700"
       >
-        <div
-          id="title"
-          className="my-auto font-josephin text-4xl font-semibold"
-        >
-          {listing.asset.name} (#{hextoNum(listing.asset.id)})
-        </div>
-        <div id="sell-data" className="flex flex-col">
-          <InfoElement
-            name="Listing Price"
-            data={`${hexToETH(listing.buyoutPrice)} ⧫`}
-          />
-          <InfoElement
-            name="Seller"
-            data={formatDisplayAddress(listing.sellerAddress)}
-          />
-        </div>
+        <ListingData listing={listing} />
       </div>
       {viewMore && (
         <div id="overlay-div absolute top-0 w-full  h-full">
@@ -99,4 +88,4 @@ const ViewListing: React.FC<{ listing: DirectListing }> = ({ listing }) => {
   );
 };
 
-export default ViewListing;
+export default PreviewListing;
