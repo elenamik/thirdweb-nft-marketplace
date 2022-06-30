@@ -1,43 +1,80 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
+import { useQuery } from "react-query";
+import { ThirdwebSDK } from "@thirdweb-dev/sdk";
 import { targetChain } from "../../config/targetChain";
 import { MarketPlaceContractAddress } from "../../config/contractAddresses";
-
+import {
+  AuctionListing,
+  DirectListing,
+} from "@thirdweb-dev/sdk/dist/src/types/marketplace";
+import { BigNumber, ethers } from "ethers";
 import * as React from "react";
 import { ListingData } from "../../components/ListingData";
-import { useListing, useMarketplace } from "@thirdweb-dev/react";
-import { DirectListing } from "@thirdweb-dev/sdk";
-import { AuctionListing } from "@thirdweb-dev/sdk/dist/src/types/marketplace";
+import LargeInfoText from "../../components/LargeInfoText";
+
+const handleConnect = async () => {
+  try {
+    await window.ethereum.request({
+      method: "eth_requestAccounts",
+    });
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    console.log("provider", provider);
+
+    const signer = provider.getSigner();
+    console.log("signer", signer);
+
+    if (!signer) return;
+    const sdk = ThirdwebSDK.fromSigner(signer, "mumbai");
+    console.log("Connected");
+    return sdk;
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 const ListingPage: NextPage = () => {
   const router = useRouter();
+
+  // initialize with read only
+  const [sdk, setSDK] = React.useState(new ThirdwebSDK(targetChain));
+
+  React.useEffect(() => {
+    const loadSDK = async () => {
+      const sdkWithSigner = await handleConnect();
+      if (sdkWithSigner) {
+        setSDK(sdkWithSigner);
+      }
+    };
+    loadSDK();
+  }, []);
+
+  const marketplaceContract = sdk.getMarketplace(
+    MarketPlaceContractAddress[targetChain]
+  );
+
   const { listingId } = router.query as { listingId: string };
 
-  const marketplace = useMarketplace(MarketPlaceContractAddress[targetChain]);
+  const listingQuery = useQuery<AuctionListing | DirectListing>({
+    queryFn: () => {
+      return marketplaceContract.getListing(BigNumber.from(listingId));
+    },
+    enabled: !!listingId,
+  });
 
-  const { data: listing, isLoading } = useListing(marketplace, listingId);
-
-  const handleBuy = async (event: DirectListing | AuctionListing) => {
-    try {
-      await marketplace!.buyoutListing(event.id, 1);
-      alert("NFT purchased, congratulations!");
-    } catch (e: any) {
-      alert(`Error purchasing NFT: ${e}`);
-    }
+  const handleBuy = async (event: DirectListing) => {
+    const result = await marketplaceContract.buyoutListing(event.id, 1);
   };
 
-  if (isLoading) {
+  if (listingQuery.isLoading) {
     return (
       <div className="p-6 font-josephin text-2xl font-semibold">Loading...</div>
     );
   }
-  if (!listing && !isLoading) {
-    return (
-      <div className="p-6 font-josephin text-2xl font-semibold">
-        There was an error loading the listing.
-      </div>
-    );
+  if (listingQuery.isError || (listingQuery.isSuccess && !listingQuery.data)) {
+    return <LargeInfoText message={"Error Loading Listing"} />;
   }
+  const listing = listingQuery.data;
   return (
     <div id="container" className="flex w-full flex-row p-6 px-10">
       <img
