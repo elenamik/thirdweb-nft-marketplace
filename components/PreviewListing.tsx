@@ -19,7 +19,7 @@ const PreviewListing: React.FC<{ listing: AuctionListing | DirectListing }> = ({
   return (
     <button
       onClick={handleListingClick}
-      className="min-w-400 max-w-400 duration-50 relative z-0 m-6 rounded-3xl border text-left transition ease-in-out hover:shadow-lg active:scale-105"
+      className="min-w-400 max-w-400 relative z-0 m-6 rounded-3xl border text-left transition ease-in-out hover:shadow-lg active:scale-105"
     >
       <img
         id="image"
@@ -28,7 +28,7 @@ const PreviewListing: React.FC<{ listing: AuctionListing | DirectListing }> = ({
       />
       <div
         id="image-metadata"
-        className="space-between flex justify-between rounded-b-3xl border-0 bg-slate-300 p-3 text-slate-900"
+        className="flex justify-between rounded-b-3xl border-0 bg-slate-300 p-3 text-slate-900"
       >
         <ListingData
           listing={listing}

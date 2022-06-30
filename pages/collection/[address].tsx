@@ -58,9 +58,6 @@ const CollectionPage: NextPage<{ data: string }> = (props) => {
 
   return (
     <div id="container" className="p-6 px-10">
-      <div className="font-5xl p-4 pt-2 text-center font-josephin text-3xl font-semibold text-slate-800">
-        My Collection
-      </div>
       <div id="container" className="flex w-full flex-wrap justify-center">
         {nfts}
       </div>

@@ -48,7 +48,7 @@ const Header: React.FC = () => {
         ) : (
           <>
             <button
-              className="font-bol p-3  text-2xl font-normal text-slate-700 transition ease-in-out hover:scale-105 hover:font-semibold "
+              className="p-3 text-2xl  font-bold font-normal text-slate-700 transition ease-in-out hover:scale-105 hover:font-semibold "
               onClick={() => {
                 router.push(`/collection/${address}`);
               }}
