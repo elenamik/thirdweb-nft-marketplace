@@ -5,11 +5,25 @@ import { hextoNum } from "../web3utils";
 import ListingData from "./ListingData";
 import { AuctionListing } from "@thirdweb-dev/sdk/dist/src/types/marketplace";
 import { useRouter } from "next/router";
+import { useMarketplace } from "@thirdweb-dev/react";
+import { MarketPlaceContractAddress } from "../config/contractAddresses";
+import { targetChain } from "../config/targetChain";
 
 const PreviewListing: React.FC<{ listing: AuctionListing | DirectListing }> = ({
   listing,
 }) => {
   const router = useRouter();
+
+  const marketplace = useMarketplace(MarketPlaceContractAddress[targetChain]);
+
+  const handleBuy = async (event: DirectListing | AuctionListing) => {
+    try {
+      await marketplace!.buyoutListing(event.id, 1);
+      alert("NFT purchased, congratulations!");
+    } catch (e: any) {
+      alert(`Error purchasing NFT: ${e}`);
+    }
+  };
 
   const handleListingClick = () => {
     const id = hextoNum(listing.asset.id!);
@@ -33,8 +47,7 @@ const PreviewListing: React.FC<{ listing: AuctionListing | DirectListing }> = ({
         <ListingData
           listing={listing}
           handleBuy={() => {
-            console.log("nada");
-            // TOOD: add logic to buy here too
+            handleBuy(listing);
           }}
         />
       </div>

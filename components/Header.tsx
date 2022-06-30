@@ -15,8 +15,6 @@ const Header: React.FC = () => {
     text,
     handleClick,
   }) => {
-    const router = useRouter();
-    const address = useAddress();
     return (
       <button
         id="buy-button"
