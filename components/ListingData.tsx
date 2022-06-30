@@ -17,6 +17,7 @@ export const ListingData: React.FC<{
         </div>
         <div className="pl-1">{listing?.asset.description}</div>
       </div>
+
       <div id="sell-data" className="flex h-full flex-col justify-center p-3">
         <InfoElement
           name="Listing Price"
