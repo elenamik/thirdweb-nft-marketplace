@@ -15,6 +15,8 @@ const Header: React.FC = () => {
     text,
     handleClick,
   }) => {
+    const router = useRouter();
+    const address = useAddress();
     return (
       <button
         id="buy-button"
@@ -44,18 +46,29 @@ const Header: React.FC = () => {
             handleClick={connectWithMetamask}
           />
         ) : (
-          <div id="account" className="my-auto flex align-middle ">
-            <AccountButton
-              text="Disconnect Wallet"
-              handleClick={disconnectWallet}
-            />
-            <div className="text-lg font-medium text-slate-700">
-              <span className="pl-2 text-3xl font-normal">|</span>
-              <span id="address" className="p-2">
-                {formatDisplayAddress(address)}
-              </span>
+          <>
+            <button
+              className="font-bol p-3  text-2xl font-normal text-slate-700 transition ease-in-out hover:scale-105 hover:font-semibold "
+              onClick={() => {
+                router.push(`/collection/${address}`);
+              }}
+              id="my-coll"
+            >
+              My Collection
+            </button>
+            <div id="account" className="my-auto flex align-middle ">
+              <AccountButton
+                text="Disconnect Wallet"
+                handleClick={disconnectWallet}
+              />
+              <div className="text-lg font-medium text-slate-700">
+                <span className="pl-2 text-3xl font-normal">|</span>
+                <span id="address" className="p-2">
+                  {formatDisplayAddress(address)}
+                </span>
+              </div>
             </div>
-          </div>
+          </>
         )}
       </div>
     </div>

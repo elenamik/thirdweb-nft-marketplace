@@ -3,6 +3,7 @@ import { getAlchemyEndpoint } from "../../config/endpoints";
 
 import * as React from "react";
 import { OwnedNft, OwnedNftsResponse } from "@alch/alchemy-sdk";
+import { formatDisplayAddress } from "../../web3utils";
 
 const NftCard: React.FC<{ data: OwnedNft }> = ({ data }) => {
   const id = data.id.tokenId;
@@ -26,9 +27,9 @@ const NftCard: React.FC<{ data: OwnedNft }> = ({ data }) => {
               className="text-blue-700"
               href={`https://etherscan.io/token/${address}`}
               rel="noreferrer"
-            >{`${address.slice(0, 4)}...${address.slice(
-              address.length - 4
-            )}`}</a>
+            >
+              {formatDisplayAddress(address)}
+            </a>
           </div>
         </div>
         <p>{description ? description.slice(0, 200) : "No Description"}</p>
