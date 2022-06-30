@@ -36,5 +36,3 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## Resources
 - [thirdweb example](https://marketplace.thirdweb-example.com/) used as a reference
-- [setting up GQL + next.js](https://www.youtube.com/watch?v=XzE-PzALyDc&t=222s)
-- [TypeGraphQL docs](https://typegraphql.com/docs/installation.html)
