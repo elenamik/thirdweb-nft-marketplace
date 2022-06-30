@@ -9,5 +9,9 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
+  // GET, POST, PUT
+  const { address } = req.query as { address: string };
+  console.log("ADDR", address);
+
   res.status(200).json({ name: "John Doe" });
 }
