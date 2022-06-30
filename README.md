@@ -36,3 +36,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## Resources
 - [thirdweb example](https://marketplace.thirdweb-example.com/) used as a reference
+- [alchemy walkthrough](https://www.youtube.com/watch?v=YehktV6LSqw) and [example repo](https://github.com/alchemyplatform/Build-Your-NFT-Explorer)
