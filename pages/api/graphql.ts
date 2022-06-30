@@ -1,14 +1,5 @@
 import { ApolloServer } from "apollo-server-micro";
-import { queryType, makeSchema } from "nexus";
-
-const Query = queryType({
-  definition(t) {
-    t.string("hello", { resolve: () => "hello world!" });
-  },
-});
-const schema = makeSchema({
-  types: [Query],
-});
+import schema from "../../schema";
 
 const server = new ApolloServer({
   schema,
