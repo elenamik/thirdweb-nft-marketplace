@@ -1,26 +1,24 @@
 import { NextPage, NextPageContext } from "next";
-import { useRouter } from "next/router";
 import { getAlchemyEndpoint } from "../../config/endpoints";
 
 import * as React from "react";
-import { OwnedNft, OwnedNftsResponse, NftMetadata } from "@alch/alchemy-sdk";
-import { formatDisplayAddress } from "../../web3utils";
+import { OwnedNft, OwnedNftsResponse } from "@alch/alchemy-sdk";
 
 const NftCard: React.FC<{ data: OwnedNft }> = ({ data }) => {
   const id = data.id.tokenId;
   const image = data.media[0].gateway;
   const address = data.contract.address;
   const description = data.description;
-  const attributes = data.metadata.attributes;
 
   return (
-    <div className="mr-3 mb-4 w-1/4 rounded-md bg-slate-100">
-      <img className="w-full rounded-t-md" key={id} src={image}></img>
+    <div className="m-6 w-1/4 rounded-3xl bg-slate-200 text-slate-700 hover:shadow-lg">
+      <img className="w-full rounded-t-3xl " key={id} src={image}></img>
       <div className="p-3">
         <div className="mb-3 flex">
           <div className="grow">
-            <h3 className="text-xl">{data.title}</h3>
-            <p>{`${id.slice(0, 4)}...${id.slice(id.length - 4)}`}</p>
+            <h3 className="font-josephin text-2xl font-semibold">
+              {data.title}
+            </h3>
           </div>
           <div className="mr-3 flex">
             <a
@@ -34,17 +32,6 @@ const NftCard: React.FC<{ data: OwnedNft }> = ({ data }) => {
           </div>
         </div>
         <p>{description ? description.slice(0, 200) : "No Description"}</p>
-      </div>
-      <div className="flex flex-wrap items-center justify-center p-3 ">
-        {attributes?.length > 0 &&
-          attributes.map((attribute: NftMetadata["attributes"]) => {
-            return (
-              <div className="mb-2 flex w-1/2 flex-col justify-start">
-                <p className="mr-2 font-bold">{attribute.trait_type}:</p>
-                <p className="text-sm">{attribute.value}</p>
-              </div>
-            );
-          })}
       </div>
     </div>
   );
@@ -64,18 +51,14 @@ export async function getServerSideProps(context: NextPageContext) {
 
 const CollectionPage: NextPage<{ data: string }> = (props) => {
   const data: OwnedNftsResponse = JSON.parse(props.data);
-  console.log("DATA", data);
-  const router = useRouter();
-  const { address } = router.query as { address: string };
-
   const nfts = data.ownedNfts.map((ownedNft: OwnedNft) => {
     return <NftCard data={ownedNft} />;
   });
 
   return (
     <div id="container" className="p-6 px-10">
-      <div className="p-4 pt-2 text-center font-josephin text-3xl">
-        Collection At {formatDisplayAddress(address)}
+      <div className="font-5xl p-4 pt-2 text-center font-josephin text-3xl font-semibold text-slate-800">
+        My Collection
       </div>
       <div id="container" className="flex w-full flex-wrap justify-center">
         {nfts}
