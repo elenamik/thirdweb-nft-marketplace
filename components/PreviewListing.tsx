@@ -5,11 +5,25 @@ import { hextoNum } from "../web3utils";
 import ListingData from "./ListingData";
 import { AuctionListing } from "@thirdweb-dev/sdk/dist/src/types/marketplace";
 import { useRouter } from "next/router";
+import { useMarketplace } from "@thirdweb-dev/react";
+import { MarketPlaceContractAddress } from "../config/contractAddresses";
+import { targetChain } from "../config/targetChain";
 
 const PreviewListing: React.FC<{ listing: AuctionListing | DirectListing }> = ({
   listing,
 }) => {
   const router = useRouter();
+
+  const marketplace = useMarketplace(MarketPlaceContractAddress[targetChain]);
+
+  const handleBuy = async (event: DirectListing | AuctionListing) => {
+    try {
+      await marketplace!.buyoutListing(event.id, 1);
+      alert("NFT purchased, congratulations!");
+    } catch (e: any) {
+      alert(`Error purchasing NFT: ${e}`);
+    }
+  };
 
   const handleListingClick = () => {
     const id = hextoNum(listing.asset.id!);
@@ -19,7 +33,7 @@ const PreviewListing: React.FC<{ listing: AuctionListing | DirectListing }> = ({
   return (
     <button
       onClick={handleListingClick}
-      className="min-w-400 max-w-400 duration-50 relative z-0 m-6 rounded-3xl border text-left transition ease-in-out hover:shadow-lg active:scale-105"
+      className="min-w-400 max-w-400 relative z-0 m-6 rounded-3xl border text-left transition ease-in-out hover:shadow-lg active:scale-105"
     >
       <img
         id="image"
@@ -28,13 +42,12 @@ const PreviewListing: React.FC<{ listing: AuctionListing | DirectListing }> = ({
       />
       <div
         id="image-metadata"
-        className="space-between flex justify-between rounded-b-3xl border-0 bg-slate-300 p-3 text-slate-900"
+        className="flex justify-between rounded-b-3xl border-0 bg-slate-300 p-3 text-slate-900"
       >
         <ListingData
           listing={listing}
           handleBuy={() => {
-            console.log("nada");
-            // TOOD: add logic to buy here too
+            handleBuy(listing);
           }}
         />
       </div>
