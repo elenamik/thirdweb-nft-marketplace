@@ -39,4 +39,6 @@ Check out [Next.js deployment documentation](https://nextjs.org/docs/deployment)
 
 ## Resources
 - [thirdweb example](https://marketplace.thirdweb-example.com/) used as a reference
+- thirdweb sample code provided in their dashboard along with the marketplace contract TODO: insert image
+- [alchemy docs](https://docs.alchemy.com/alchemy/sdk/alchemy-sdk-quickstart)
 - [alchemy walkthrough](https://www.youtube.com/watch?v=YehktV6LSqw) and [example repo](https://github.com/alchemyplatform/Build-Your-NFT-Explorer)
