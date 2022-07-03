@@ -26,7 +26,6 @@ export async function getServerSideProps(context: NextPageContext) {
 const CreateListingPage: NextPage<{ data: string }> = (props) => {
   const router = useRouter();
   const NFT: Nft = JSON.parse(props.data);
-  console.log("DATA", NFT);
   const [price, setPrice] = React.useState<string>("1");
   const [creating, setCreating] = React.useState<boolean>(false);
 
@@ -52,7 +51,6 @@ const CreateListingPage: NextPage<{ data: string }> = (props) => {
       buyoutPricePerToken: price.toString(),
     };
 
-    console.log("creating");
     setCreating(true);
     try {
       const tx = await marketplace!.direct.createListing(listing);
