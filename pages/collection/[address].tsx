@@ -8,6 +8,7 @@ import {
 } from "@alch/alchemy-sdk";
 import NftCard from "../../components/NftCard";
 import { alchemy } from "../../config/alchemy";
+import { formatDisplayAddress } from "../../web3utils";
 
 export async function getServerSideProps(context: NextPageContext) {
   const address: string = context.query.address;
@@ -22,7 +23,30 @@ const CollectionPage: NextPage<{ data: string }> = (props) => {
   const data: OwnedNftsResponse = JSON.parse(props.data);
 
   const nfts = data.ownedNfts.map((ownedNft: OwnedNft) => {
-    return <NftCard data={ownedNft} enableCreateList={true} />;
+    const address = ownedNft.contract.address;
+    const description = ownedNft.description;
+    return (
+      <NftCard data={ownedNft} key={ownedNft.tokenId}>
+        <div id="container w-full">
+          <div className="flex flex-row justify-between">
+            <div className="font-josephin text-2xl font-semibold">
+              {ownedNft.title}
+            </div>
+            <div className="mr-3 flex">
+              <a
+                target="_blank"
+                className="text-blue-700"
+                href={`https://etherscan.io/token/${address}`}
+                rel="noreferrer"
+              >
+                {formatDisplayAddress(address)}
+              </a>
+            </div>
+          </div>
+          <p>{description ? description.slice(0, 200) : "No Description"}</p>
+        </div>
+      </NftCard>
+    );
   });
 
   return (

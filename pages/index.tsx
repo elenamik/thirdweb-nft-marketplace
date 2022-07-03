@@ -15,11 +15,8 @@ import LargeInfoText from "../components/LargeInfoText";
 
 /***
  * TODOS:
- * // typing issues with NFTMetaData - attributes
- * // show NFTs in wallet
- * // give ability to list
- * // buy NFT ability
  * // can get desiredChainID from the context? rn its hardcoded wrong in index.tsx
+ * // direct imports
  */
 
 const Home: NextPage = () => {
