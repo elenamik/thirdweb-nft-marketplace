@@ -2,13 +2,12 @@ import { NextPage, NextPageContext } from "next";
 
 import * as React from "react";
 import { getNftMetadata, Nft, NftTokenType } from "@alch/alchemy-sdk";
-import { useMarketplace } from "@thirdweb-dev/react";
+import { MediaRenderer, useMarketplace } from "@thirdweb-dev/react";
 import { MarketPlaceContractAddress } from "../../config/contractAddresses";
 import { targetChain } from "../../config/targetChain";
 import { NATIVE_TOKEN_ADDRESS } from "@thirdweb-dev/sdk";
 import { useRouter } from "next/router";
 import { alchemy } from "../../config/alchemy";
-import NftCard from "../../components/NftCard";
 
 export async function getServerSideProps(context: NextPageContext) {
   const contractAddress: string = context.query.contractAddress;
@@ -27,7 +26,6 @@ export async function getServerSideProps(context: NextPageContext) {
 const CreateListingPage: NextPage<{ data: string }> = (props) => {
   const router = useRouter();
   const NFT: Nft = JSON.parse(props.data);
-  console.log("DATA", NFT);
   const [price, setPrice] = React.useState<string>("1");
   const [creating, setCreating] = React.useState<boolean>(false);
 
@@ -70,7 +68,17 @@ const CreateListingPage: NextPage<{ data: string }> = (props) => {
       id="container"
       className="flex w-full flex-row justify-center p-6 px-10"
     >
-      <NftCard data={NFT} enableCreateList={false} />
+      <div id="image" className="w-1/2 rounded-3xl pr-10">
+        <MediaRenderer
+          src={NFT.media[0].gateway}
+          style={{
+            // Fit the image to the container
+            width: "100%",
+            height: "100%",
+            borderRadius: 16,
+          }}
+        />
+      </div>
       <div id="list-form" className="pt-6">
         <div className=" flex flex-col rounded-2xl bg-slate-200 p-10 text-2xl">
           <span className="text-center font-josephin font-semibold">
@@ -90,7 +98,7 @@ const CreateListingPage: NextPage<{ data: string }> = (props) => {
               <button
                 disabled={true}
                 onClick={createListing}
-                className="m-1 mt-6 rounded-3xl bg-slate-900 p-4 text-center text-2xl font-semibold text-slate-200 transition ease-in-out hover:border-4 hover:border-slate-200 hover:shadow-lg  active:scale-105"
+                className="primary-button mt-4"
               >
                 Creating Listing...
               </button>
@@ -99,10 +107,7 @@ const CreateListingPage: NextPage<{ data: string }> = (props) => {
               </div>
             </>
           ) : (
-            <button
-              onClick={createListing}
-              className="m-1 mt-6 rounded-3xl bg-slate-900 p-4 text-center text-2xl font-semibold text-slate-200 transition ease-in-out hover:border-4 hover:border-slate-200 hover:shadow-lg  active:scale-105"
-            >
+            <button onClick={createListing} className="primary-button mt-4">
               Execute
             </button>
           )}
