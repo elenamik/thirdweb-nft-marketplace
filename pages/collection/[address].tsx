@@ -9,6 +9,7 @@ import {
 import NftCard from "../../components/NftCard";
 import { alchemy } from "../../config/alchemy";
 import { formatDisplayAddress } from "../../web3utils";
+import { useRouter } from "next/router";
 
 export async function getServerSideProps(context: NextPageContext) {
   const address: string = context.query.address;
@@ -21,6 +22,7 @@ export async function getServerSideProps(context: NextPageContext) {
 
 const CollectionPage: NextPage<{ data: string }> = (props) => {
   const data: OwnedNftsResponse = JSON.parse(props.data);
+  const router = useRouter();
 
   const nfts = data.ownedNfts.map((ownedNft: OwnedNft) => {
     const address = ownedNft.contract.address;
@@ -43,7 +45,19 @@ const CollectionPage: NextPage<{ data: string }> = (props) => {
               </a>
             </div>
           </div>
+          <span>(#{ownedNft.tokenId})</span>
           <p>{description ? description.slice(0, 200) : "No Description"}</p>
+          <div
+            id="list-button"
+            onClick={() => {
+              router.push(
+                `/create-listing/${address}?tokenId=${ownedNft.tokenId}`
+              );
+            }}
+            className="primary-button w-1/2"
+          >
+            List NFT
+          </div>
         </div>
       </NftCard>
     );

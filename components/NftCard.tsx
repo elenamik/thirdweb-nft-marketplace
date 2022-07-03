@@ -23,19 +23,6 @@ export const NftCard: React.FC<{
         />
       </div>
       <div className="p-3">{children}</div>
-      {/*<img className="w-full rounded-t-3xl " key={id} src={image}></img>*/}
-
-      {/*{enableCreateList && (*/}
-      {/*  <div*/}
-      {/*    id="list-button"*/}
-      {/*    onClick={() => {*/}
-      {/*      router.push(`/create-listing/${address}?tokenId=${id}`);*/}
-      {/*    }}*/}
-      {/*    className="m-1 rounded-3xl bg-slate-900 p-2 text-center text-lg font-semibold text-slate-200 transition ease-in-out hover:border-4 hover:border-slate-200 hover:shadow-lg  active:scale-105"*/}
-      {/*  >*/}
-      {/*    List NFT*/}
-      {/*  </div>*/}
-      {/*)}*/}
     </div>
   );
 };

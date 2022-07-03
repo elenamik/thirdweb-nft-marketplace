@@ -11,7 +11,6 @@ import {
 } from "@thirdweb-dev/sdk/dist/src/types/marketplace";
 import { MarketPlaceContractAddress } from "../config/contractAddresses";
 import { targetChain } from "../config/targetChain";
-import LargeInfoText from "../components/LargeInfoText";
 
 /***
  * TODOS:
@@ -35,7 +34,7 @@ const Home: NextPage = () => {
   );
 
   if (activeListingsQueryState.isLoading) {
-    return <LargeInfoText message={"Loading..."} />;
+    return <div className="large-text">Loading...</div>;
   }
   return (
     <div className="flex flex-wrap justify-center">

@@ -3,12 +3,11 @@ import InfoElement from "./InfoElement";
 import { DirectListing } from "@thirdweb-dev/sdk/dist/node";
 import { formatDisplayAddress, hexToETH, hextoNum } from "../web3utils";
 import { AuctionListing } from "@thirdweb-dev/sdk/dist/src/types/marketplace";
-import LargeInfoText from "./LargeInfoText";
 export const ListingData: React.FC<{
   listing: AuctionListing | DirectListing;
   handleBuy?: () => {};
 }> = ({ listing, handleBuy }) => {
-  if (!listing) return <LargeInfoText message={"Nothing to Display"} />;
+  if (!listing) return <div className="large-text">Loading...</div>;
   return (
     <div className="flex grow justify-between">
       <div id="listing-header" className="flex flex-col justify-center p-1">
