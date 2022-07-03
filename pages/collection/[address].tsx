@@ -8,8 +8,8 @@ import {
 } from "@alch/alchemy-sdk";
 import NftCard from "../../components/NftCard";
 import { alchemy } from "../../config/alchemy";
-import { formatDisplayAddress } from "../../web3utils";
 import { useRouter } from "next/router";
+import NFTInfo from "../../components/NFTInfo";
 
 export async function getServerSideProps(context: NextPageContext) {
   const address: string = context.query.address;
@@ -27,26 +27,16 @@ const CollectionPage: NextPage<{ data: string }> = (props) => {
   const nfts = data.ownedNfts.map((ownedNft: OwnedNft) => {
     const address = ownedNft.contract.address;
     const description = ownedNft.description;
+    const image = ownedNft.media[0].gateway;
     return (
-      <NftCard data={ownedNft} key={ownedNft.tokenId}>
+      <NftCard image={image} key={ownedNft.tokenId}>
         <div id="container w-full">
-          <div className="flex flex-row justify-between">
-            <div className="font-josephin text-2xl font-semibold">
-              {ownedNft.title}
-            </div>
-            <div className="mr-3 flex">
-              <a
-                target="_blank"
-                className="text-blue-700"
-                href={`https://etherscan.io/token/${address}`}
-                rel="noreferrer"
-              >
-                {formatDisplayAddress(address)}
-              </a>
-            </div>
-          </div>
-          <span>(#{ownedNft.tokenId})</span>
-          <p>{description ? description.slice(0, 200) : "No Description"}</p>
+          <NFTInfo
+            id={ownedNft.tokenId}
+            description={description}
+            title={ownedNft.title}
+            address={address}
+          />
           <div
             id="list-button"
             onClick={() => {
@@ -54,7 +44,7 @@ const CollectionPage: NextPage<{ data: string }> = (props) => {
                 `/create-listing/${address}?tokenId=${ownedNft.tokenId}`
               );
             }}
-            className="primary-button w-1/2"
+            className="primary-button w-100"
           >
             List NFT
           </div>

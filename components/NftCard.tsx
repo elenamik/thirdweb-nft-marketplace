@@ -1,15 +1,12 @@
 import * as React from "react";
-import { OwnedNft } from "@alch/alchemy-sdk";
 import { MediaRenderer } from "@thirdweb-dev/react";
 
 export const NftCard: React.FC<{
-  data: OwnedNft;
+  image: string;
   children: React.ReactElement<any, any>;
-}> = ({ data, children }) => {
-  const image = data.media[0].gateway;
-
+}> = ({ image, children }) => {
   return (
-    <div className="m-6 w-1/4 rounded-3xl bg-slate-200 text-slate-700 hover:shadow-lg">
+    <div className="m-6 flex w-1/4 flex-col rounded-3xl bg-slate-200 text-slate-700 hover:shadow-lg">
       <div className="rounded-3xl">
         <MediaRenderer
           src={image}
@@ -22,7 +19,7 @@ export const NftCard: React.FC<{
           }}
         />
       </div>
-      <div className="p-3">{children}</div>
+      <div className="p-6">{children}</div>
     </div>
   );
 };

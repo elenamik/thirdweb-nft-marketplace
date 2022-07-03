@@ -4,10 +4,8 @@ import { targetChain } from "../../config/targetChain";
 import { MarketPlaceContractAddress } from "../../config/contractAddresses";
 
 import * as React from "react";
-import { ListingData } from "../../components/ListingData";
-import { useListing, useMarketplace } from "@thirdweb-dev/react";
-import { DirectListing } from "@thirdweb-dev/sdk";
-import { AuctionListing } from "@thirdweb-dev/sdk/dist/src/types/marketplace";
+import { MediaRenderer, useListing, useMarketplace } from "@thirdweb-dev/react";
+import { formatDisplayAddress, hexToETH } from "../../web3utils";
 
 const ListingPage: NextPage = () => {
   const router = useRouter();
@@ -17,9 +15,9 @@ const ListingPage: NextPage = () => {
 
   const { data: listing, isLoading } = useListing(marketplace, listingId);
 
-  const handleBuy = async (event: DirectListing | AuctionListing) => {
+  const handleBuy = async () => {
     try {
-      await marketplace!.buyoutListing(event.id, 1);
+      await marketplace!.buyoutListing(listingId, 1);
       alert("NFT purchased, congratulations!");
     } catch (e: any) {
       alert(`Error purchasing NFT: ${e}`);
@@ -39,14 +37,44 @@ const ListingPage: NextPage = () => {
     );
   }
   return (
-    <div id="container" className="flex w-full flex-row p-6 px-10">
-      <img
-        id="image"
-        className="max-w-xl rounded-3xl border-4"
-        src={listing?.asset.image!}
-      />
-      <div id="listing-data" className="w-3/4 p-2 align-middle text-slate-900">
-        <ListingData listing={listing} handleBuy={() => handleBuy(listing)} />
+    <div
+      id="container"
+      className="flex w-full flex-row justify-center  p-6 px-10 text-lg"
+    >
+      <div id="image" className="w-1/3 rounded-3xl">
+        <MediaRenderer
+          src={listing?.asset.image}
+          style={{
+            // Fit the image to the container
+            width: "100%",
+            height: "100%",
+            borderRadius: 16,
+          }}
+        />
+      </div>
+      <div id="sell-data" className="flex flex-col p-6">
+        <div className="text-left ">
+          <span className="font-bold">Listing Price: </span>
+          {`${hexToETH(listing.buyoutPrice)} ⧫`}
+        </div>
+        <div className="text-left ">
+          <span className="font-bold">Seller: </span>
+          <a
+            target="_blank"
+            className="text-blue-700"
+            href={`https://etherscan.io/token/${listing.sellerAddress}`}
+            rel="noreferrer"
+          >
+            {formatDisplayAddress(listing.sellerAddress)}
+          </a>
+        </div>
+        <div
+          id="buy-button"
+          onClick={handleBuy}
+          className="primary-button w-full"
+        >
+          Buy for {hexToETH(listing.buyoutPrice)} ⧫
+        </div>
       </div>
     </div>
   );
