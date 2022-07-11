@@ -20,7 +20,8 @@ import { useActiveListings, useMarketplace } from "@thirdweb-dev/react";
  */
 
 const Home: NextPage = () => {
-  const marketplace = useMarketplace(MarketPlaceContractAddress[targetChain]);
+  const marketplaceAddress = MarketPlaceContractAddress[targetChain];
+  const marketplace = useMarketplace(marketplaceAddress);
   const { data, isLoading } = useActiveListings(marketplace);
 
   const router = useRouter();
