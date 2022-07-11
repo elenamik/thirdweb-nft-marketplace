@@ -1,1 +1,1 @@
-export const targetChain = 'rinkeby'
+export const targetChain = "Goerli";

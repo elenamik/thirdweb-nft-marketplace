@@ -2,6 +2,11 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+### Set up an NFT Marketplace in Thirdweb + point the app to the right place
+You can use the config in here by default (Goerli, pointing to a marketplace contract I made on Thirdweb), but if you want to use your own,
+you can change the `targetChain` in `config/targetChain.ts` (checkout the definition of Thirdweb's [ChainId](https://github.com/thirdweb-dev/react/blob/77e30702d7938723486453e7383257028ed18c98/src/constants/chain.ts) to see the supported values),
+and paste your contract marketplace contract address in `config/contractAddresses.ts`.
+
 ### Set up Alchemy
 You can skip this step to begin with, but you will need to set this to get the `api/collection` page functional.
 

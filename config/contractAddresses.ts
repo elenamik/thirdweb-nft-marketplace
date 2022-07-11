@@ -1,3 +1,3 @@
 export enum MarketPlaceContractAddress {
-    rinkeby = '0x26e3c47E0a3f620a7cb5Acffe124e76f990BC482'
+  Goerli = "0x14f3d32B90Ede9922Fd7EE4FDfD3AabbEA423aD0",
 }
