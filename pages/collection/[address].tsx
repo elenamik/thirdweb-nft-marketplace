@@ -13,8 +13,6 @@ import NFTInfo from "../../components/NFTInfo";
 
 export async function getServerSideProps(context: NextPageContext) {
   const address: string = context.query.address;
-  console.log("ADDRESS", address);
-
   // TODO: wrap in try catch
   const data = await getNftsForOwner(alchemy, address);
 
@@ -28,7 +26,6 @@ const CollectionPage: NextPage<{ data: string }> = (props) => {
   const nfts = data.ownedNfts.map((ownedNft: OwnedNft) => {
     const address = ownedNft.contract.address;
     const description = ownedNft.description;
-    console.log(ownedNft);
     const image = ownedNft.media[0].gateway;
     return (
       <NftCard image={image} key={ownedNft.tokenId}>
