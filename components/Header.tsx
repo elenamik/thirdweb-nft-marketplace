@@ -2,6 +2,7 @@ import * as React from "react";
 import { useMetamask, useAddress, useDisconnect } from "@thirdweb-dev/react";
 import { useRouter } from "next/router";
 import { formatDisplayAddress } from "../web3utils";
+import { targetChain } from "../config/targetChain";
 
 const Header: React.FC = () => {
   const connectWithMetamask = useMetamask();
@@ -33,7 +34,7 @@ const Header: React.FC = () => {
         id="hero-logo"
         className="pt-2 font-josephin text-5xl font-semibold text-slate-700 transition ease-in-out hover:scale-105 active:scale-105"
       >
-        ThirdSea
+        ThirdSea ({targetChain})
       </button>
       <div id="nav" className="flex flex-row align-middle">
         {!address ? (
