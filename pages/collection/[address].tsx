@@ -13,7 +13,6 @@ import NFTInfo from "../../components/NFTInfo";
 
 export async function getServerSideProps(context: NextPageContext) {
   const address: string = context.query.address;
-
   // TODO: wrap in try catch
   const data = await getNftsForOwner(alchemy, address);
 

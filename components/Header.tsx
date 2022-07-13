@@ -48,12 +48,31 @@ const Header: React.FC = () => {
             <button
               className="p-3 text-2xl  font-bold font-normal text-slate-700 transition ease-in-out hover:scale-105 hover:font-semibold "
               onClick={() => {
+                router.push("/");
+              }}
+              id="listings"
+            >
+              Listings
+            </button>
+            <button
+              className="p-3 text-2xl  font-bold font-normal text-slate-700 transition ease-in-out hover:scale-105 hover:font-semibold "
+              onClick={() => {
+                router.push("/explore");
+              }}
+              id="explore"
+            >
+              Explore
+            </button>
+            <button
+              className="p-3 text-2xl  font-bold font-normal text-slate-700 transition ease-in-out hover:scale-105 hover:font-semibold "
+              onClick={() => {
                 router.push(`/collection/${address}`);
               }}
               id="my-coll"
             >
               My Collection
             </button>
+
             <div id="account" className="my-auto flex align-middle ">
               <AccountButton
                 text="Disconnect Wallet"
