@@ -15,7 +15,6 @@ import { useActiveListings, useMarketplace } from "@thirdweb-dev/react";
 
 /***
  * TODOS:
- * // can get desiredChainID from the context? rn its hardcoded wrong in index.tsx
  * // direct imports
  */
 
