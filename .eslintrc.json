@@ -23,5 +23,6 @@
         "tailwindcss"
     ],
     "rules": {
+        "react/prop-types": "off"
     }
 }

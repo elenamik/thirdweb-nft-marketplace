@@ -12,18 +12,17 @@ import { useRouter } from "next/router";
 import NFTInfo from "../../components/NFTInfo";
 
 export async function getServerSideProps(context: NextPageContext) {
-  const address: string = context.query.address;
+  const address: string | string[] | undefined = context.query.address;
   // TODO: wrap in try catch
-  const data = await getNftsForOwner(alchemy, address);
-
+  const data = await getNftsForOwner(alchemy, address?.toString() ?? "");
   return { props: { data: JSON.stringify(data) } };
 }
 
-const CollectionPage: NextPage<{ data: string }> = (props) => {
-  const data: OwnedNftsResponse = JSON.parse(props.data);
+const CollectionPage: NextPage<{ data: string }> = ({ data }) => {
+  const fetchedData: OwnedNftsResponse = JSON.parse(data);
   const router = useRouter();
 
-  const nfts = data.ownedNfts.map((ownedNft: OwnedNft) => {
+  const nfts = fetchedData.ownedNfts.map((ownedNft: OwnedNft) => {
     const address = ownedNft.contract.address;
     const description = ownedNft.description;
     const image = ownedNft.media[0].gateway;
@@ -43,7 +42,7 @@ const CollectionPage: NextPage<{ data: string }> = (props) => {
                 `/create-listing/${address}?tokenId=${ownedNft.tokenId}`
               );
             }}
-            className="primary-button w-100"
+            className="primary-button"
           >
             List NFT
           </div>

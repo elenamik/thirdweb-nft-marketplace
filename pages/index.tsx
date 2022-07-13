@@ -34,42 +34,44 @@ const Home: NextPage = () => {
       {data?.map((listing: AuctionListing | DirectListing) => {
         return (
           <>
-            <NftCard image={listing.asset.image} key={listing.id}>
-              <NFTInfo
-                id={listing.id}
-                description={listing.asset.description}
-                title={listing.asset.name}
-                address={listing.assetContractAddress}
-              />
-              <div
-                id="sell-data"
-                className="flex flex-row justify-between pt-2"
-              >
-                <div className="text-left ">
-                  <span className="font-bold">Listing Price: </span>
-                  {`${hexToETH(listing.buyoutPrice)} ⧫`}
+            <NftCard image={listing.asset?.image ?? ""} key={listing.id}>
+              <>
+                <NFTInfo
+                  id={listing.id}
+                  description={listing.asset?.description ?? ""}
+                  title={listing.asset?.name ?? ""}
+                  address={listing.assetContractAddress}
+                />
+                <div
+                  id="sell-data"
+                  className="flex flex-row justify-between pt-2"
+                >
+                  <div className="text-left ">
+                    <span className="font-bold">Listing Price: </span>
+                    {`${hexToETH(listing.buyoutPrice)} ⧫`}
+                  </div>
+                  <div className="text-left ">
+                    <span className="font-bold">Seller: </span>
+                    <a
+                      target="_blank"
+                      className="text-blue-700"
+                      href={`https://etherscan.io/token/${listing.sellerAddress}`}
+                      rel="noreferrer"
+                    >
+                      {formatDisplayAddress(listing.sellerAddress)}
+                    </a>
+                  </div>
                 </div>
-                <div className="text-left ">
-                  <span className="font-bold">Seller: </span>
-                  <a
-                    target="_blank"
-                    className="text-blue-700"
-                    href={`https://etherscan.io/token/${listing.sellerAddress}`}
-                    rel="noreferrer"
-                  >
-                    {formatDisplayAddress(listing.sellerAddress)}
-                  </a>
+                <div
+                  id="buy-button"
+                  onClick={() => {
+                    router.push(`/listing/${listing.id}`);
+                  }}
+                  className="primary-button"
+                >
+                  Buy for {hexToETH(listing.buyoutPrice)} ⧫
                 </div>
-              </div>
-              <div
-                id="buy-button"
-                onClick={() => {
-                  router.push(`/listing/${listing.id}`);
-                }}
-                className="primary-button w-100"
-              >
-                Buy for {hexToETH(listing.buyoutPrice)} ⧫
-              </div>
+              </>
             </NftCard>
           </>
         );
