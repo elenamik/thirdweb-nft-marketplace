@@ -10,22 +10,23 @@ import { useRouter } from "next/router";
 import { alchemy } from "../../config/alchemy";
 
 export async function getServerSideProps(context: NextPageContext) {
-  const contractAddress: string = context.query.contractAddress;
-  const tokenId: string = context.query.tokenId!;
+  const contractAddress: string | string[] | undefined =
+    context.query.contractAddress;
+  const tokenId: string | string[] | undefined = context.query.tokenId;
 
   // TODO: wrap in try catch
   const data = await getNftMetadata(alchemy, {
-    tokenId,
-    contract: { address: contractAddress },
+    tokenId: tokenId?.toString() ?? "",
+    contract: { address: contractAddress?.toString() ?? "" },
     tokenType: NftTokenType.ERC721,
   });
 
   return { props: { data: JSON.stringify(data) } };
 }
 
-const CreateListingPage: NextPage<{ data: string }> = (props) => {
+const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
   const router = useRouter();
-  const NFT: Nft = JSON.parse(props.data);
+  const NFT: Nft = JSON.parse(data);
   const [price, setPrice] = React.useState<string>("1");
   const [creating, setCreating] = React.useState<boolean>(false);
 
