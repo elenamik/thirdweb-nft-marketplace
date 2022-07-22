@@ -3,10 +3,10 @@ import { NextPage, NextPageContext } from "next";
 import * as React from "react";
 import { getNftMetadata, Nft, NftTokenType } from "@alch/alchemy-sdk";
 import { MediaRenderer, useMarketplace } from "@thirdweb-dev/react";
-import { MarketPlaceContractAddress } from "../../config/contractAddresses";
-import { targetChain } from "../../config/targetChain";
 import { NATIVE_TOKEN_ADDRESS } from "@thirdweb-dev/sdk";
 import { useRouter } from "next/router";
+import { useMutation } from "react-query";
+import { readAppContractAddresses } from "../../config/contractAddresses";
 import { alchemy } from "../../config/alchemy";
 
 export async function getServerSideProps(context: NextPageContext) {
@@ -15,6 +15,7 @@ export async function getServerSideProps(context: NextPageContext) {
   const tokenId: string | string[] | undefined = context.query.tokenId;
 
   // TODO: wrap in try catch
+
   const data = await getNftMetadata(alchemy, {
     tokenId: tokenId?.toString() ?? "",
     contract: { address: contractAddress?.toString() ?? "" },
@@ -27,42 +28,44 @@ export async function getServerSideProps(context: NextPageContext) {
 const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
   const router = useRouter();
   const NFT: Nft = JSON.parse(data);
-  const [price, setPrice] = React.useState<string>("1");
-  const [creating, setCreating] = React.useState<boolean>(false);
+  const [price, setPrice] = React.useState<number>(0.5);
 
-  const marketplace = useMarketplace(MarketPlaceContractAddress[targetChain]);
+  const marketplace = useMarketplace(readAppContractAddresses("Marketplace"));
 
   const handlePriceChange = (event: { target: { value: string } }) => {
     const re = /^[0-9]+\.?[0-9]*$/;
 
     const val = event.target.value;
     if (val === "" || re.test(val)) {
-      setPrice(val);
+      setPrice(Number(val));
     }
   };
 
   const createListing = async () => {
-    const listing = {
+    const tx = await marketplace!.direct.createListing({
       assetContractAddress: NFT.contract.address,
       tokenId: NFT.tokenId,
       startTimestamp: new Date(),
       listingDurationInSeconds: 86400,
       quantity: 1,
       currencyContractAddress: NATIVE_TOKEN_ADDRESS,
-      buyoutPricePerToken: price.toString(),
-    };
-
-    setCreating(true);
-    try {
-      const tx = await marketplace!.direct.createListing(listing);
-      if (tx.id) {
-        const listingId = tx.id; // the id of the newly created listing
-        router.push(`/listing/${listingId}`);
-      }
-    } catch (error: any) {
-      setCreating(false);
+      buyoutPricePerToken: price,
+    });
+    if (tx.id) {
+      const listingId = tx.id; // the id of the newly created listing
+      router.push(`/listing/${listingId}`);
     }
   };
+  const { mutate: create, isLoading } = useMutation({
+    mutationFn: createListing,
+    onError: (err: any) => {
+      console.error(err);
+      alert(err);
+    },
+    onSuccess: (txn: any) => {
+      router.push(`/listing/${txn.id}`);
+    },
+  });
 
   return (
     <div
@@ -94,13 +97,9 @@ const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
             />
             {"  "}⧫
           </div>
-          {creating ? (
+          {isLoading ? (
             <>
-              <button
-                disabled={true}
-                onClick={createListing}
-                className="primary-button mt-4"
-              >
+              <button disabled={true} className="primary-button mt-4">
                 Creating Listing...
               </button>
               <div className="text-sm text-slate-800">
@@ -108,7 +107,7 @@ const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
               </div>
             </>
           ) : (
-            <button onClick={createListing} className="primary-button mt-4">
+            <button onClick={create} className="primary-button mt-4">
               Execute
             </button>
           )}
