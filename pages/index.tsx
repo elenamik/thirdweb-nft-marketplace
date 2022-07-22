@@ -5,13 +5,12 @@ import {
   AuctionListing,
   DirectListing,
 } from "@thirdweb-dev/sdk/dist/src/types/marketplace";
-import { MarketPlaceContractAddress } from "../config/contractAddresses";
-import { targetChain } from "../config/targetChain";
 import NftCard from "../components/NftCard";
 import NFTInfo from "../components/NFTInfo";
 import { formatDisplayAddress, hexToETH } from "../web3utils";
 import { useRouter } from "next/router";
 import { useActiveListings, useMarketplace } from "@thirdweb-dev/react";
+import { getContractAddress } from "../config/contractAddresses";
 
 /***
  * TODOS:
@@ -19,7 +18,7 @@ import { useActiveListings, useMarketplace } from "@thirdweb-dev/react";
  */
 
 const Home: NextPage = () => {
-  const marketplaceAddress = MarketPlaceContractAddress[targetChain];
+  const marketplaceAddress = getContractAddress("Marketplace");
   const marketplace = useMarketplace(marketplaceAddress);
   const { data, isLoading } = useActiveListings(marketplace);
 

@@ -1,24 +1,30 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { targetChain } from "../../config/targetChain";
-import { MarketPlaceContractAddress } from "../../config/contractAddresses";
+import { getContractAddress } from "../../config/contractAddresses";
 
 import * as React from "react";
-import { MediaRenderer, useListing, useMarketplace } from "@thirdweb-dev/react";
+import {
+  MediaRenderer,
+  useAddress,
+  useListing,
+  useMarketplace,
+} from "@thirdweb-dev/react";
 import { formatDisplayAddress, hexToETH } from "../../web3utils";
 
 const ListingPage: NextPage = () => {
   const router = useRouter();
   const { listingId } = router.query as { listingId: string };
 
-  const marketplace = useMarketplace(MarketPlaceContractAddress[targetChain]);
+  const address = useAddress();
+
+  const marketplace = useMarketplace(getContractAddress("Marketplace"));
 
   const { data: listing, isLoading } = useListing(marketplace, listingId);
 
   const handleBuy = async () => {
     try {
       await marketplace!.buyoutListing(listingId, 1);
-      alert("NFT purchased, congratulations!");
+      router.push(`/collection/${address}`);
     } catch (e: any) {
       alert(`Error purchasing NFT: ${e}`);
     }

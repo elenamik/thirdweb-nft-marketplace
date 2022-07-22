@@ -25,7 +25,7 @@ const CollectionPage: NextPage<{ data: string }> = ({ data }) => {
   const nfts = fetchedData.ownedNfts.map((ownedNft: OwnedNft) => {
     const address = ownedNft.contract.address;
     const description = ownedNft.description;
-    const image = ownedNft.media[0].gateway;
+    const image = ownedNft.media[0]?.gateway;
     return (
       <NftCard image={image} key={ownedNft.tokenId}>
         <div id="container w-full">

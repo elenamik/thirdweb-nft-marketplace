@@ -1,14 +1,32 @@
 import * as React from "react";
-import { useMetamask, useAddress, useDisconnect } from "@thirdweb-dev/react";
+import {
+  useMetamask,
+  useAddress,
+  useDisconnect,
+  useNetwork,
+} from "@thirdweb-dev/react";
 import { useRouter } from "next/router";
 import { formatDisplayAddress } from "../web3utils";
-import { targetChain } from "../config/targetChain";
+import { useNetworkMismatch } from "@thirdweb-dev/react";
+import { targetChainId } from "../config/targetChainId";
+import { ChainId } from "@thirdweb-dev/sdk";
 
 const Header: React.FC = () => {
   const connectWithMetamask = useMetamask();
   const address = useAddress();
   const disconnectWallet = useDisconnect();
   const router = useRouter();
+  const isMismatched = useNetworkMismatch();
+
+  const [{ data: networkInfo }, switchNetwork] = useNetwork();
+  console.log(networkInfo);
+
+  const getChainName = (chainId?: ChainId) => {
+    const chain = networkInfo.chains.find(
+      (chain: { id: ChainId; name: string }) => chain.id === chainId
+    );
+    return chain?.name ?? "Unidentified network";
+  };
 
   const AccountButton: React.FC<{ text: string; handleClick: any }> = ({
     text,
@@ -34,7 +52,7 @@ const Header: React.FC = () => {
         id="hero-logo"
         className="pt-2 font-josephin text-5xl font-semibold text-slate-700 transition ease-in-out hover:scale-105 active:scale-105"
       >
-        ThirdSea ({targetChain})
+        ThirdSea
       </button>
       <div id="nav" className="flex flex-row align-middle">
         {!address ? (
@@ -73,6 +91,16 @@ const Header: React.FC = () => {
             </button>
 
             <div id="account" className="my-auto flex align-middle ">
+              {isMismatched && (
+                <div>
+                  Wallet is connected to wrong network (
+                  {getChainName(networkInfo?.chain?.id)}) <br />
+                  <button onClick={() => switchNetwork!(targetChainId)}>
+                    switch to
+                    {getChainName(targetChainId)}
+                  </button>
+                </div>
+              )}
               <AccountButton
                 text="Disconnect Wallet"
                 handleClick={disconnectWallet}
