@@ -1,12 +1,17 @@
 import { ChainId } from "@thirdweb-dev/sdk";
 import { targetChainId } from "./targetChainId";
 
-const ADDRESSES = {
+interface IAddresses {
+  [key: string]: { [key: string]: string };
+}
+
+const ADDRESSES: IAddresses = {
   [ChainId.Goerli]: {
     Marketplace: "0x14f3d32B90Ede9922Fd7EE4FDfD3AabbEA423aD0",
   },
 };
 
-export const getContractAddress = (name: string) => {
+console.log(typeof ADDRESSES);
+export const readAppContractAddresses = (name: string) => {
   return ADDRESSES[targetChainId][name];
 };

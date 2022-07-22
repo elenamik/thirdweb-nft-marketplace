@@ -10,7 +10,7 @@ import NFTInfo from "../components/NFTInfo";
 import { formatDisplayAddress, hexToETH } from "../web3utils";
 import { useRouter } from "next/router";
 import { useActiveListings, useMarketplace } from "@thirdweb-dev/react";
-import { getContractAddress } from "../config/contractAddresses";
+import { readAppContractAddresses } from "../config/contractAddresses";
 
 /***
  * TODOS:
@@ -18,7 +18,7 @@ import { getContractAddress } from "../config/contractAddresses";
  */
 
 const Home: NextPage = () => {
-  const marketplaceAddress = getContractAddress("Marketplace");
+  const marketplaceAddress = readAppContractAddresses("Marketplace");
   const marketplace = useMarketplace(marketplaceAddress);
   const { data, isLoading } = useActiveListings(marketplace);
 

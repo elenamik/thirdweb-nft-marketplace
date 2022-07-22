@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { getContractAddress } from "../../config/contractAddresses";
+import { readAppContractAddresses } from "../../config/contractAddresses";
 
 import * as React from "react";
 import {
@@ -17,7 +17,7 @@ const ListingPage: NextPage = () => {
 
   const address = useAddress();
 
-  const marketplace = useMarketplace(getContractAddress("Marketplace"));
+  const marketplace = useMarketplace(readAppContractAddresses("Marketplace"));
 
   const { data: listing, isLoading } = useListing(marketplace, listingId);
 

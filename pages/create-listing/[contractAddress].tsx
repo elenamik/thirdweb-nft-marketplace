@@ -7,7 +7,7 @@ import { NATIVE_TOKEN_ADDRESS } from "@thirdweb-dev/sdk";
 import { useRouter } from "next/router";
 import { alchemy } from "../../config/alchemy";
 import { useMutation } from "react-query";
-import { getContractAddress } from "../../config/contractAddresses";
+import { readAppContractAddresses } from "../../config/contractAddresses";
 
 export async function getServerSideProps(context: NextPageContext) {
   const contractAddress: string | string[] | undefined =
@@ -29,7 +29,7 @@ const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
   const NFT: Nft = JSON.parse(data);
   const [price, setPrice] = React.useState<number>(0.5);
 
-  const marketplace = useMarketplace(getContractAddress("Marketplace"));
+  const marketplace = useMarketplace(readAppContractAddresses("Marketplace"));
 
   const handlePriceChange = (event: { target: { value: string } }) => {
     const re = /^[0-9]+\.?[0-9]*$/;
