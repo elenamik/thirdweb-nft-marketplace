@@ -1,5 +1,5 @@
 import { ChainId } from "@thirdweb-dev/sdk";
-import { targetChainId } from "./targetChainId";
+import { targetChainId } from "./targetChainConfig";
 
 interface IAddresses {
   [key: string]: { [key: string]: string };

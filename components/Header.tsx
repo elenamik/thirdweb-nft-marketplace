@@ -8,7 +8,7 @@ import {
 import { useRouter } from "next/router";
 import { formatDisplayAddress } from "../web3utils";
 import { useNetworkMismatch } from "@thirdweb-dev/react";
-import { targetChainId } from "../config/targetChainId";
+import { targetChainId } from "../config/targetChainConfig";
 import { ChainId } from "@thirdweb-dev/sdk";
 
 const Header: React.FC = () => {
@@ -19,7 +19,6 @@ const Header: React.FC = () => {
   const isMismatched = useNetworkMismatch();
 
   const [{ data: networkInfo }, switchNetwork] = useNetwork();
-  console.log(networkInfo);
 
   const getChainName = (chainId?: ChainId) => {
     const chain = networkInfo.chains.find(

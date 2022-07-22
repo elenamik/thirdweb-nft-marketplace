@@ -1,6 +1,6 @@
 import { initializeAlchemy, Network } from "@alch/alchemy-sdk";
 import { ChainId } from "@thirdweb-dev/sdk";
-import { targetChainId } from "./targetChainId";
+import { targetChainId } from "./targetChainConfig";
 
 /***
  * Alchemy has different naming conventions, so need to convert from chain ID to their constant

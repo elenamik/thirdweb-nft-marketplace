@@ -5,9 +5,9 @@ import { getNftMetadata, Nft, NftTokenType } from "@alch/alchemy-sdk";
 import { MediaRenderer, useMarketplace } from "@thirdweb-dev/react";
 import { NATIVE_TOKEN_ADDRESS } from "@thirdweb-dev/sdk";
 import { useRouter } from "next/router";
-import { alchemy } from "../../config/alchemy";
 import { useMutation } from "react-query";
 import { readAppContractAddresses } from "../../config/contractAddresses";
+import { alchemy } from "../../config/alchemy";
 
 export async function getServerSideProps(context: NextPageContext) {
   const contractAddress: string | string[] | undefined =
@@ -15,6 +15,7 @@ export async function getServerSideProps(context: NextPageContext) {
   const tokenId: string | string[] | undefined = context.query.tokenId;
 
   // TODO: wrap in try catch
+
   const data = await getNftMetadata(alchemy, {
     tokenId: tokenId?.toString() ?? "",
     contract: { address: contractAddress?.toString() ?? "" },

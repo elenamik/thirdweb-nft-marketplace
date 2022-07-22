@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import * as React from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ThirdwebProvider } from "@thirdweb-dev/react";
-import { targetChainId } from "../config/targetChainId";
+import { targetChainId } from "../config/targetChainConfig";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient();
