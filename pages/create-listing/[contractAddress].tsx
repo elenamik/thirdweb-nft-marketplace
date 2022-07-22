@@ -59,7 +59,8 @@ const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
   const { mutate: create, isLoading } = useMutation({
     mutationFn: createListing,
     onError: (err: any) => {
-      console.log(err);
+      console.error(err);
+      alert(err);
     },
     onSuccess: (txn: any) => {
       router.push(`/listing/${txn.id}`);

@@ -26,6 +26,7 @@ const ListingPage: NextPage = () => {
       await marketplace!.buyoutListing(listingId, 1);
       router.push(`/collection/${address}`);
     } catch (e: any) {
+      console.error(e);
       alert(`Error purchasing NFT: ${e}`);
     }
   };
