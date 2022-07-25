@@ -13,7 +13,7 @@ export const NFTInfo: React.FC<{
   return (
     <>
       <div id="title-and-link" className="flex flex-row justify-between">
-        <div className="font-josephin text-2xl font-semibold">{`${title} (#${id})`}</div>
+        <div className="text-2xl font-semibold">{`${title} (#${id})`}</div>
         <div className="mr-3 flex">
           <div className="text-right">
             <span className="font-bold">Token Address: </span>

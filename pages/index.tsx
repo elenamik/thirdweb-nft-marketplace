@@ -70,7 +70,7 @@ const Home: NextPage = () => {
                   }}
                   className="primary-button"
                 >
-                  Buy for {hexToETH(listing.buyoutPrice)} ⧫
+                  View Listing
                 </div>
               </>
             </NftCard>
