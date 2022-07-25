@@ -51,6 +51,7 @@ const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
       currencyContractAddress: NATIVE_TOKEN_ADDRESS,
       buyoutPricePerToken: price,
     });
+    console.log("TX", tx);
     if (tx.id) {
       const listingId = tx.id; // the id of the newly created listing
       router.push(`/listing/${listingId}`);
@@ -84,7 +85,7 @@ const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
         />
       </div>
       <div id="list-form" className="pt-6">
-        <div className=" flex flex-col rounded-2xl border border-slate-200 p-10 text-2xl">
+        <div className=" flex flex-col rounded-2xl border border-slate-200 p-10 text-xl">
           <span className="text-center font-semibold">List NFT For:</span>
           <div>
             <input

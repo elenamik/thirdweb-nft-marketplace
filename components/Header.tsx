@@ -32,7 +32,7 @@ const Header: React.FC = () => {
 
   const Account: React.FC = () => {
     return (
-      <div id="account" className="flex items-center p-3 align-middle text-xl ">
+      <div id="account" className="text-md flex items-center p-3 align-middle ">
         <div className="flex">
           <span id="address" className="pr-2 font-semibold">
             {formatDisplayAddress(address!)}
@@ -85,16 +85,16 @@ const Header: React.FC = () => {
               }}
             >
               <input
-                className="h-12 w-full rounded-lg border border-slate-200 pr-4 pl-11 focus:shadow-[0_0_8px_0_rgba(4,17,29,0.25)] focus:outline-none"
+                className="text-md h-12 w-full rounded-lg border border-slate-200 pr-4 pl-11 focus:shadow-[0_0_8px_0_rgba(4,17,29,0.25)] focus:outline-none"
                 type="search"
                 placeholder="View NFTs by owner"
               />
-              <Search className="absolute inset-y-0 left-4 my-auto" />
+              <Search className="absolute inset-y-0 left-4 my-auto w-5 object-scale-down" />
             </form>
           </li>
           <li>
             <Link href="/" id="listings">
-              <div className="grow-on-hover  whitespace-nowrap p-3 text-xl font-normal text-slate-700 hover:font-semibold ">
+              <div className="grow-on-hover  text-md whitespace-nowrap p-3 font-normal text-slate-700 hover:font-semibold ">
                 Listings
               </div>
             </Link>
@@ -105,7 +105,7 @@ const Header: React.FC = () => {
               <button
                 id="buy-button"
                 onClick={connectWithMetamask}
-                className="primary-button p-3 text-xl"
+                className="primary-button text-md p-3"
               >
                 Connect
               </button>
@@ -115,7 +115,7 @@ const Header: React.FC = () => {
             <>
               <li>
                 <Link href={`/collection/${address}`} id="my collection">
-                  <div className="grow-on-hover whitespace-nowrap p-3 text-xl font-normal text-slate-700 hover:font-semibold ">
+                  <div className="grow-on-hover text-md whitespace-nowrap p-3 font-normal text-slate-700 hover:font-semibold ">
                     My Collection
                   </div>
                 </Link>

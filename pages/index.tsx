@@ -45,13 +45,13 @@ const Home: NextPage = () => {
                 />
                 <div
                   id="sell-data"
-                  className="flex flex-row justify-between pt-2"
+                  className="flex flex-col  justify-between pt-2 text-sm "
                 >
                   <div className="text-left ">
                     <span className="font-bold">Listing Price: </span>
                     {`${hexToETH(listing.buyoutPrice)} ⧫`}
                   </div>
-                  <div className="text-left ">
+                  <div className="mt-1 text-left">
                     <span className="font-bold">Seller: </span>
                     <a
                       target="_blank"
@@ -64,11 +64,11 @@ const Home: NextPage = () => {
                   </div>
                 </div>
                 <div
-                  id="buy-button"
+                  id="buy-button "
                   onClick={() => {
                     router.push(`/listing/${listing.id}`);
                   }}
-                  className="primary-button"
+                  className="primary-button mt-2"
                 >
                   View Listing
                 </div>
