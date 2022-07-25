@@ -1,5 +1,6 @@
 import * as React from "react";
 import { formatDisplayAddress } from "../web3utils";
+import { getEtherscanURL } from "../config/targetChainConfig";
 
 export const NFTInfo: React.FC<{
   id: string;
@@ -7,6 +8,8 @@ export const NFTInfo: React.FC<{
   title: string;
   address: string;
 }> = ({ id, description, title, address }) => {
+  const etherscanURL = getEtherscanURL();
+
   return (
     <>
       <div id="title-and-link" className="flex flex-row justify-between">
@@ -17,7 +20,7 @@ export const NFTInfo: React.FC<{
             <a
               target="_blank"
               className="text-blue-700"
-              href={`https://etherscan.io/token/${address}`}
+              href={`${etherscanURL}/token/${address}`}
               rel="noreferrer"
             >
               {formatDisplayAddress(address)}
