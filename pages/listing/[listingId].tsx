@@ -34,13 +34,11 @@ const ListingPage: NextPage = () => {
   };
 
   if (isLoading) {
-    return (
-      <div className="font-josephin p-6 text-2xl font-semibold">Loading...</div>
-    );
+    return <div className="p-6 text-2xl font-semibold">Loading...</div>;
   }
   if (!listing && !isLoading) {
     return (
-      <div className="font-josephin p-6 text-2xl font-semibold">
+      <div className="p-6 text-2xl font-semibold">
         There was an error loading the listing.
       </div>
     );

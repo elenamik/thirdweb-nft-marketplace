@@ -85,9 +85,7 @@ const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
       </div>
       <div id="list-form" className="pt-6">
         <div className=" flex flex-col rounded-2xl border border-slate-200 p-10 text-2xl">
-          <span className="font-josephin text-center font-semibold">
-            List NFT For:
-          </span>
+          <span className="text-center font-semibold">List NFT For:</span>
           <div>
             <input
               type="string"
