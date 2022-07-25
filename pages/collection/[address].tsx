@@ -42,7 +42,7 @@ const CollectionPage: NextPage<{ data: string }> = ({ data }) => {
                 `/create-listing/${address}?tokenId=${ownedNft.tokenId}`
               );
             }}
-            className="primary-button"
+            className="primary-button mt-2"
           >
             List NFT
           </div>

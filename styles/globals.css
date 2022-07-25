@@ -14,4 +14,8 @@
     }
     .primary-button {
         @apply hover:bg-slate-500 active:bg-slate-500 bg-slate-300 font-semibold focus:shadow-[0_0_8px_0_rgba(4,17,29,0.25)] rounded-xl border border-slate-200 p-2 text-center}
+
+    .primary-input {
+        @apply rounded-lg border border-slate-200 focus:shadow-[0_0_8px_0_rgba(4,17,29,0.25)] focus:outline-none
+    }
 }

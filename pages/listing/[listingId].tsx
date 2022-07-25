@@ -60,7 +60,7 @@ const ListingPage: NextPage = () => {
         />
       </div>
       <div id="sell-data" className="flex flex-col p-6">
-        <div className="text-left ">
+        <div className="text-left">
           <span className="font-bold">Listing Price: </span>
           {`${hexToETH(listing.buyoutPrice)} ⧫`}
         </div>

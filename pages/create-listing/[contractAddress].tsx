@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { useMutation } from "react-query";
 import { readAppContractAddresses } from "../../config/contractAddresses";
 import { alchemy } from "../../config/alchemy";
+import { TransactionResultWithId } from "@thirdweb-dev/sdk/dist/src/core/types";
 
 export async function getServerSideProps(context: NextPageContext) {
   const contractAddress: string | string[] | undefined =
@@ -42,7 +43,7 @@ const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
   };
 
   const createListing = async () => {
-    const tx = await marketplace!.direct.createListing({
+    return marketplace!.direct.createListing({
       assetContractAddress: NFT.contract.address,
       tokenId: NFT.tokenId,
       startTimestamp: new Date(),
@@ -51,10 +52,6 @@ const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
       currencyContractAddress: NATIVE_TOKEN_ADDRESS,
       buyoutPricePerToken: price,
     });
-    if (tx.id) {
-      const listingId = tx.id; // the id of the newly created listing
-      router.push(`/listing/${listingId}`);
-    }
   };
   const { mutate: create, isLoading } = useMutation({
     mutationFn: createListing,
@@ -62,7 +59,7 @@ const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
       console.error(err);
       alert(err);
     },
-    onSuccess: (txn: any) => {
+    onSuccess: (txn: TransactionResultWithId) => {
       router.push(`/listing/${txn.id}`);
     },
   });
@@ -84,12 +81,12 @@ const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
         />
       </div>
       <div id="list-form" className="pt-6">
-        <div className=" flex flex-col rounded-2xl border border-slate-200 p-10 text-2xl">
+        <div className=" flex flex-col rounded-2xl border border-slate-200 p-10 text-xl">
           <span className="text-center font-semibold">List NFT For:</span>
           <div>
             <input
               type="string"
-              className="max-w-sm rounded-2xl bg-slate-300 p-2"
+              className="primary-input max-w-sm p-1"
               value={price}
               onChange={handlePriceChange}
             />
