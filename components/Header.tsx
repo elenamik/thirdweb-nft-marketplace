@@ -85,7 +85,7 @@ const Header: React.FC = () => {
               }}
             >
               <input
-                className="text-md h-12 w-full rounded-lg border border-slate-200 pr-4 pl-11 focus:shadow-[0_0_8px_0_rgba(4,17,29,0.25)] focus:outline-none"
+                className="primary-input text-md h-12 w-full pr-4 pl-11"
                 type="search"
                 placeholder="View NFTs by owner"
               />

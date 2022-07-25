@@ -42,7 +42,7 @@ const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
   };
 
   const createListing = async () => {
-    const tx = await marketplace!.direct.createListing({
+    return marketplace!.direct.createListing({
       assetContractAddress: NFT.contract.address,
       tokenId: NFT.tokenId,
       startTimestamp: new Date(),
@@ -51,11 +51,6 @@ const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
       currencyContractAddress: NATIVE_TOKEN_ADDRESS,
       buyoutPricePerToken: price,
     });
-    console.log("TX", tx);
-    if (tx.id) {
-      const listingId = tx.id; // the id of the newly created listing
-      router.push(`/listing/${listingId}`);
-    }
   };
   const { mutate: create, isLoading } = useMutation({
     mutationFn: createListing,
@@ -90,7 +85,7 @@ const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
           <div>
             <input
               type="string"
-              className="max-w-sm rounded-2xl bg-slate-300 p-2"
+              className="primary-input max-w-sm p-1"
               value={price}
               onChange={handlePriceChange}
             />
