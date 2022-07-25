@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { useMutation } from "react-query";
 import { readAppContractAddresses } from "../../config/contractAddresses";
 import { alchemy } from "../../config/alchemy";
+import { TransactionResultWithId } from "@thirdweb-dev/sdk/dist/src/core/types";
 
 export async function getServerSideProps(context: NextPageContext) {
   const contractAddress: string | string[] | undefined =
@@ -58,7 +59,7 @@ const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
       console.error(err);
       alert(err);
     },
-    onSuccess: (txn: any) => {
+    onSuccess: (txn: TransactionResultWithId) => {
       router.push(`/listing/${txn.id}`);
     },
   });
