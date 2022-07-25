@@ -5,10 +5,13 @@
 @tailwind utilities;
 
 @layer components {
+    .grow-on-hover {
+        @apply transition ease-in-out hover:scale-105 active:scale-105
+    }
+
     .large-text {
         @apply p-6 text-2xl font-semibold
     }
     .primary-button {
-        @apply m-1 rounded-3xl bg-slate-900 p-2 text-center text-lg font-semibold text-slate-200 transition ease-in-out hover:border-4 hover:border-slate-200 hover:shadow-lg  active:scale-105
-    }
+        @apply hover:bg-slate-500 active:bg-slate-500 bg-slate-300 font-semibold focus:shadow-[0_0_8px_0_rgba(4,17,29,0.25)] rounded-xl border border-slate-200 p-2 text-center}
 }

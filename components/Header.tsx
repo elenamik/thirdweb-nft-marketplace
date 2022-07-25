@@ -11,6 +11,8 @@ import { useNetworkMismatch } from "@thirdweb-dev/react";
 import { targetChainId } from "../config/targetChainConfig";
 import { ChainId } from "@thirdweb-dev/sdk";
 import Link from "next/link";
+import { AlertTriangle, Search, XCircle } from "react-feather";
+import { FormEvent } from "react";
 
 const Header: React.FC = () => {
   const connectWithMetamask = useMetamask();
@@ -28,100 +30,103 @@ const Header: React.FC = () => {
     return chain?.name ?? "Unidentified network";
   };
 
-  const AccountButton: React.FC<{ text: string; handleClick: any }> = ({
-    text,
-    handleClick,
-  }) => {
+  const Account: React.FC = () => {
     return (
-      <button
-        id="buy-button"
-        onClick={handleClick}
-        className="rounded-3xl bg-slate-400 p-2 text-center text-lg font-semibold text-slate-700 transition ease-in-out hover:border-4 hover:border-slate-700 hover:shadow-lg  active:scale-105"
-      >
-        {text}
-      </button>
+      <div id="account" className="flex items-center p-3 align-middle text-xl ">
+        <div className="flex">
+          <span id="address" className="pr-2 font-semibold">
+            {formatDisplayAddress(address!)}
+          </span>
+          <XCircle className="grow-on-hover" onClick={disconnectWallet} />
+        </div>
+        {isMismatched && (
+          <div className="flex w-56 flex-col pl-2 text-sm font-semibold">
+            <div className="flex">
+              <AlertTriangle />
+              Wallet is connected to wrong network (
+              {getChainName(networkInfo?.chain?.id)})
+            </div>
+            <button
+              className="primary-button"
+              onClick={() => switchNetwork!(targetChainId)}
+            >
+              switch to {getChainName(targetChainId)}
+            </button>
+          </div>
+        )}
+      </div>
     );
   };
 
   return (
-    <div className="fixed top-0 z-10 w-full bg-white">
-      <nav className="flex w-full border-b px-6 shadow-md">
+    <div className="w-full bg-white">
+      <div className="flex w-full justify-between border-b px-6 py-2 shadow-md">
         <Link href="/" id="logo">
-          <div className="transition ease-in-out hover:scale-105 active:scale-105">
+          <div className="grow-on-hover">
             <div className="flex h-full w-1/6 flex-row items-center">
               <img
                 src="/logo_thirdsea.png"
                 className="mr-2 w-12 object-scale-down "
               />
-              <h1 id="title" className="text-2xl font-semibold text-slate-800">
+              <h1 id="title" className="text-3xl font-semibold text-slate-800">
                 ThirdSea
               </h1>
             </div>
           </div>
         </Link>
-
-        <div id="nav" className="flex flex-row align-middle">
-          {!address ? (
-            <AccountButton
-              text="Connect Wallet"
-              handleClick={connectWithMetamask}
-            />
-          ) : (
-            <>
-              <button
-                className="p-3 text-2xl  font-normal text-slate-700 transition ease-in-out hover:scale-105 hover:font-semibold "
-                onClick={() => {
-                  router.push("/");
-                }}
-                id="listings"
-              >
+        <ul className="flex">
+          <li>
+            <form
+              className="relative w-full max-w-4xl"
+              onSubmit={(e: FormEvent<HTMLFormElement>) => {
+                e.preventDefault();
+                const address = e.target[0].value;
+                router.push(`/collection/${address}`);
+              }}
+            >
+              <input
+                className="h-12 w-full rounded-lg border border-slate-200 pr-4 pl-11 focus:shadow-[0_0_8px_0_rgba(4,17,29,0.25)] focus:outline-none"
+                type="search"
+                placeholder="View NFTs by owner"
+              />
+              <Search className="absolute inset-y-0 left-4 my-auto" />
+            </form>
+          </li>
+          <li>
+            <Link href="/" id="listings">
+              <div className="grow-on-hover  whitespace-nowrap p-3 text-xl font-normal text-slate-700 hover:font-semibold ">
                 Listings
-              </button>
-              <button
-                className="p-3 text-2xl  font-normal text-slate-700 transition ease-in-out hover:scale-105 hover:font-semibold "
-                onClick={() => {
-                  router.push("/explore");
-                }}
-                id="explore"
-              >
-                Explore
-              </button>
-              <button
-                className="p-3 text-2xl  font-normal text-slate-700 transition ease-in-out hover:scale-105 hover:font-semibold "
-                onClick={() => {
-                  router.push(`/collection/${address}`);
-                }}
-                id="my-coll"
-              >
-                My Collection
-              </button>
-
-              <div id="account" className="my-auto flex align-middle ">
-                {isMismatched && (
-                  <div>
-                    Wallet is connected to wrong network (
-                    {getChainName(networkInfo?.chain?.id)}) <br />
-                    <button onClick={() => switchNetwork!(targetChainId)}>
-                      switch to
-                      {getChainName(targetChainId)}
-                    </button>
-                  </div>
-                )}
-                <AccountButton
-                  text="Disconnect Wallet"
-                  handleClick={disconnectWallet}
-                />
-                <div className="text-lg font-medium text-slate-700">
-                  <span className="pl-2 text-3xl font-normal">|</span>
-                  <span id="address" className="p-2">
-                    {formatDisplayAddress(address)}
-                  </span>
-                </div>
               </div>
+            </Link>
+          </li>
+
+          {!address && (
+            <li>
+              <button
+                id="buy-button"
+                onClick={connectWithMetamask}
+                className="primary-button p-3 text-xl"
+              >
+                Connect
+              </button>
+            </li>
+          )}
+          {address && (
+            <>
+              <li>
+                <Link href={`/collection/${address}`} id="my collection">
+                  <div className="grow-on-hover whitespace-nowrap p-3 text-xl font-normal text-slate-700 hover:font-semibold ">
+                    My Collection
+                  </div>
+                </Link>
+              </li>
+              <li>
+                <Account />
+              </li>
             </>
           )}
-        </div>
-      </nav>
+        </ul>
+      </div>
     </div>
   );
 };
