@@ -11,6 +11,7 @@ import { formatDisplayAddress, hexToETH } from "../web3utils";
 import { useRouter } from "next/router";
 import { useActiveListings, useMarketplace } from "@thirdweb-dev/react";
 import { readAppContractAddresses } from "../config/contractAddresses";
+import { getEtherscanURL } from "../config/targetChainConfig";
 
 /***
  * TODOS:
@@ -27,6 +28,7 @@ const Home: NextPage = () => {
   if (isLoading) {
     return <div className="large-text">Loading...</div>;
   }
+  const etherscanURL = getEtherscanURL();
 
   return (
     <div className="flex flex-wrap justify-center">
@@ -54,7 +56,7 @@ const Home: NextPage = () => {
                     <a
                       target="_blank"
                       className="text-blue-700"
-                      href={`https://etherscan.io/token/${listing.sellerAddress}`}
+                      href={`${etherscanURL}/token/${listing.sellerAddress}`}
                       rel="noreferrer"
                     >
                       {formatDisplayAddress(listing.sellerAddress)}
@@ -68,7 +70,7 @@ const Home: NextPage = () => {
                   }}
                   className="primary-button"
                 >
-                  Buy for {hexToETH(listing.buyoutPrice)} ⧫
+                  View Listing
                 </div>
               </>
             </NftCard>

@@ -10,6 +10,7 @@ import {
   useMarketplace,
 } from "@thirdweb-dev/react";
 import { formatDisplayAddress, hexToETH } from "../../web3utils";
+import { getEtherscanURL } from "../../config/targetChainConfig";
 
 const ListingPage: NextPage = () => {
   const router = useRouter();
@@ -20,6 +21,7 @@ const ListingPage: NextPage = () => {
   const marketplace = useMarketplace(readAppContractAddresses("Marketplace"));
 
   const { data: listing, isLoading } = useListing(marketplace, listingId);
+  const etherscanURL = getEtherscanURL();
 
   const handleBuy = async () => {
     try {
@@ -32,13 +34,11 @@ const ListingPage: NextPage = () => {
   };
 
   if (isLoading) {
-    return (
-      <div className="p-6 font-josephin text-2xl font-semibold">Loading...</div>
-    );
+    return <div className="p-6 text-2xl font-semibold">Loading...</div>;
   }
   if (!listing && !isLoading) {
     return (
-      <div className="p-6 font-josephin text-2xl font-semibold">
+      <div className="p-6 text-2xl font-semibold">
         There was an error loading the listing.
       </div>
     );
@@ -69,7 +69,7 @@ const ListingPage: NextPage = () => {
           <a
             target="_blank"
             className="text-blue-700"
-            href={`https://etherscan.io/token/${listing.sellerAddress}`}
+            href={`${etherscanURL}/token/${listing.sellerAddress}`}
             rel="noreferrer"
           >
             {formatDisplayAddress(listing.sellerAddress)}

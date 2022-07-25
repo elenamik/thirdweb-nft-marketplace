@@ -72,7 +72,7 @@ const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
       id="container"
       className="flex w-full flex-row justify-center p-6 px-10"
     >
-      <div id="image" className="w-1/2 rounded-3xl pr-10">
+      <div id="image" className="w-1/2 rounded-lg pr-10">
         <MediaRenderer
           src={NFT.media[0].gateway}
           style={{
@@ -84,10 +84,8 @@ const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
         />
       </div>
       <div id="list-form" className="pt-6">
-        <div className=" flex flex-col rounded-2xl bg-slate-200 p-10 text-2xl">
-          <span className="text-center font-josephin font-semibold">
-            List NFT For:
-          </span>
+        <div className=" flex flex-col rounded-2xl border border-slate-200 p-10 text-2xl">
+          <span className="text-center font-semibold">List NFT For:</span>
           <div>
             <input
               type="string"
