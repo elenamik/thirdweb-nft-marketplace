@@ -15,8 +15,6 @@ export async function getServerSideProps(context: NextPageContext) {
     context.query.contractAddress;
   const tokenId: string | string[] | undefined = context.query.tokenId;
 
-  // TODO: wrap in try catch
-
   const data = await getNftMetadata(alchemy, {
     tokenId: tokenId?.toString() ?? "",
     contract: { address: contractAddress?.toString() ?? "" },
@@ -29,18 +27,9 @@ export async function getServerSideProps(context: NextPageContext) {
 const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
   const router = useRouter();
   const NFT: Nft = JSON.parse(data);
-  const [price, setPrice] = React.useState<number>(0.5);
+  const [price, setPrice] = React.useState<number>(0.05);
 
   const marketplace = useMarketplace(readAppContractAddresses("Marketplace"));
-
-  const handlePriceChange = (event: { target: { value: string } }) => {
-    const re = /^[0-9]+\.?[0-9]*$/;
-
-    const val = event.target.value;
-    if (val === "" || re.test(val)) {
-      setPrice(Number(val));
-    }
-  };
 
   const createListing = async () => {
     return marketplace!.direct.createListing({
@@ -64,6 +53,14 @@ const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
     },
   });
 
+  const handlePriceChange = (event: { target: { value: number } }) => {
+    setPrice(event.target.value);
+  };
+
+  if (!NFT) {
+    return <div className="large-text">No Data To Show</div>;
+  }
+
   return (
     <div
       id="container"
@@ -85,7 +82,7 @@ const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
           <span className="text-center font-semibold">List NFT For:</span>
           <div>
             <input
-              type="string"
+              type="number"
               className="primary-input max-w-sm p-1"
               value={price}
               onChange={handlePriceChange}
