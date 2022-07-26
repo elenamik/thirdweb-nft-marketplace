@@ -15,10 +15,6 @@ export async function getServerSideProps(context: NextPageContext) {
     context.query.contractAddress;
   const tokenId: string | string[] | undefined = context.query.tokenId;
 
-  /***
-   * TODO: read NFT data from Alchemy's SDK
-   */
-  const data = [];
   const data = await getNftMetadata(alchemy, {
     tokenId: tokenId?.toString() ?? "",
     contract: { address: contractAddress?.toString() ?? "" },
@@ -31,15 +27,20 @@ export async function getServerSideProps(context: NextPageContext) {
 const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
   const router = useRouter();
   const NFT: Nft = JSON.parse(data);
-  const [price, setPrice] = React.useState<number>(0.5);
+  const [price, setPrice] = React.useState<number>(0.05);
 
-  /***
-   * TODO: instantiate marketplace
-   */
+  const marketplace = useMarketplace(readAppContractAddresses("Marketplace"));
+
   const createListing = async () => {
-    /***
-     * TODO: write function to create listing
-     */
+    return marketplace!.direct.createListing({
+      assetContractAddress: NFT.contract.address,
+      tokenId: NFT.tokenId,
+      startTimestamp: new Date(),
+      listingDurationInSeconds: 86400,
+      quantity: 1,
+      currencyContractAddress: NATIVE_TOKEN_ADDRESS,
+      buyoutPricePerToken: price,
+    });
   };
   const { mutate: create, isLoading } = useMutation({
     mutationFn: createListing,
@@ -52,13 +53,8 @@ const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
     },
   });
 
-  const handlePriceChange = (event: { target: { value: string } }) => {
-    const re = /^[0-9]+\.?[0-9]*$/;
-
-    const val = event.target.value;
-    if (val === "" || re.test(val)) {
-      setPrice(Number(val));
-    }
+  const handlePriceChange = (event: { target: { value: number } }) => {
+    setPrice(event.target.value);
   };
 
   if (!NFT) {
@@ -86,7 +82,7 @@ const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
           <span className="text-center font-semibold">List NFT For:</span>
           <div>
             <input
-              type="string"
+              type="number"
               className="primary-input max-w-sm p-1"
               value={price}
               onChange={handlePriceChange}
@@ -114,3 +110,17 @@ const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
 };
 
 export default CreateListingPage;
+
+function isValid(el, evnt) {
+  var charC = evnt.which ? evnt.which : evnt.keyCode;
+  if (charC == 46) {
+    if (el.value.indexOf(".") === -1) {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    if (charC > 31 && (charC < 48 || charC > 57)) return false;
+  }
+  return true;
+}

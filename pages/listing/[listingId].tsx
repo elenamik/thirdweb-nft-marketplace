@@ -34,10 +34,7 @@ const ListingPage: NextPage = () => {
 
   const { mutate: handleBuy, isLoading: buyLoading } = useMutation({
     mutationFn: () => {
-      /***
-       * TODO: add logic to execute buy
-       */
-      return undefined;
+      return marketplace!.buyoutListing(listingId, 1);
     },
     onError: (err: any) => {
       console.error(err);

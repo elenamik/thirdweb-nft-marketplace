@@ -14,20 +14,22 @@ import { useAddress } from "@thirdweb-dev/react";
 
 export async function getServerSideProps(context: NextPageContext) {
   const address: string | string[] | undefined = context.query.address;
-  /***
-   * TODO: fetch NFTs from address with Alchemy
-   */
-  return { props: { data: [], address } };
+  const data = await getNftsForOwner(alchemy, address?.toString() ?? "");
+
+  return { props: { data: JSON.stringify(data), address } };
 }
 
-const CollectionPage: NextPage<{ data: string }> = ({ data, address }) => {
+const CollectionPage: NextPage<{ data: string; address: string }> = ({
+  data,
+  address,
+}) => {
   const router = useRouter();
   const userAddress = useAddress();
   const viewingOwnCollection = userAddress === address;
   /***
    * TODO: replace fetchedData with data from server side props
    */
-  const fetchedData = [];
+  const fetchedData: OwnedNftsResponse = JSON.parse(data);
 
   const nfts = fetchedData?.ownedNfts?.map((ownedNft: OwnedNft) => {
     const address = ownedNft.contract.address;
