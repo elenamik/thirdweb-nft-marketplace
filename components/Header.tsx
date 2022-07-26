@@ -32,7 +32,7 @@ const Header: React.FC = () => {
 
   const Account: React.FC = () => {
     return (
-      <div id="account" className="text-md flex items-center p-3 align-middle ">
+      <div id="account" className=" flex items-center p-3 align-middle ">
         <div className="flex">
           <span id="address" className="pr-2 font-semibold">
             {formatDisplayAddress(address!)}
@@ -85,7 +85,7 @@ const Header: React.FC = () => {
               }}
             >
               <input
-                className="primary-input text-md h-12 w-full pr-4 pl-11"
+                className="primary-input  h-12 w-full pr-4 pl-11"
                 type="search"
                 placeholder="View NFTs by owner"
               />
@@ -94,7 +94,7 @@ const Header: React.FC = () => {
           </li>
           <li>
             <Link href="/" id="listings">
-              <div className="grow-on-hover  text-md whitespace-nowrap p-3 font-normal text-slate-700 hover:font-semibold ">
+              <div className="grow-on-hover   whitespace-nowrap p-3 font-normal text-slate-700 hover:font-semibold ">
                 Listings
               </div>
             </Link>
@@ -105,7 +105,7 @@ const Header: React.FC = () => {
               <button
                 id="buy-button"
                 onClick={connectWithMetamask}
-                className="primary-button text-md p-3"
+                className="primary-button  p-3"
               >
                 Connect
               </button>
@@ -115,7 +115,7 @@ const Header: React.FC = () => {
             <>
               <li>
                 <Link href={`/collection/${address}`} id="my collection">
-                  <div className="grow-on-hover text-md whitespace-nowrap p-3 font-normal text-slate-700 hover:font-semibold ">
+                  <div className="grow-on-hover  whitespace-nowrap p-3 font-normal text-slate-700 hover:font-semibold ">
                     My Collection
                   </div>
                 </Link>

@@ -12,7 +12,6 @@ import {
 import { formatDisplayAddress, hexToETH } from "../../web3utils";
 import { getEtherscanURL } from "../../config/targetChainConfig";
 import { useMutation } from "react-query";
-import { TransactionResult, TransactionResultWithId } from "@thirdweb-dev/sdk";
 
 const ListingPage: NextPage = () => {
   const router = useRouter();
