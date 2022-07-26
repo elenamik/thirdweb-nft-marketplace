@@ -12,10 +12,7 @@ import {
 import { formatDisplayAddress, hexToETH } from "../../web3utils";
 import { getEtherscanURL } from "../../config/targetChainConfig";
 import { useMutation } from "react-query";
-import {
-  TransactionResult,
-  TransactionResultWithId,
-} from "@thirdweb-dev/sdk/dist/src/core/types";
+import { TransactionResult, TransactionResultWithId } from "@thirdweb-dev/sdk";
 
 const ListingPage: NextPage = () => {
   const router = useRouter();
@@ -23,9 +20,6 @@ const ListingPage: NextPage = () => {
 
   const { listingId } = router.query as { listingId: string };
 
-  /***
-   * TODO: instantiate marketplace and listing
-   */
   const marketplace = useMarketplace(readAppContractAddresses("Marketplace"));
   const { data: listing, isLoading: listingLoading } = useListing(
     marketplace,

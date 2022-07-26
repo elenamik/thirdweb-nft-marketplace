@@ -26,9 +26,6 @@ const CollectionPage: NextPage<{ data: string; address: string }> = ({
   const router = useRouter();
   const userAddress = useAddress();
   const viewingOwnCollection = userAddress === address;
-  /***
-   * TODO: replace fetchedData with data from server side props
-   */
   const fetchedData: OwnedNftsResponse = JSON.parse(data);
 
   const nfts = fetchedData?.ownedNfts?.map((ownedNft: OwnedNft) => {

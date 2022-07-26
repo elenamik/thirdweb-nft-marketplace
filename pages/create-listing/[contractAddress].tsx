@@ -110,17 +110,3 @@ const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
 };
 
 export default CreateListingPage;
-
-function isValid(el, evnt) {
-  var charC = evnt.which ? evnt.which : evnt.keyCode;
-  if (charC == 46) {
-    if (el.value.indexOf(".") === -1) {
-      return true;
-    } else {
-      return false;
-    }
-  } else {
-    if (charC > 31 && (charC < 48 || charC > 57)) return false;
-  }
-  return true;
-}
