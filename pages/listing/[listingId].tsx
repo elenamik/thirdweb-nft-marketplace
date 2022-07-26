@@ -19,15 +19,23 @@ const ListingPage: NextPage = () => {
 
   const { listingId } = router.query as { listingId: string };
 
-  const marketplace = useMarketplace(readAppContractAddresses("Marketplace"));
-  const { data: listing, isLoading: listingLoading } = useListing(
-    marketplace,
-    listingId
-  );
+  /***
+   * TODO: instantiate marketplace
+   */
+
+  /***
+   * TODO instantiate listing with thirdweb SDK
+   * replaced listing and isLoading
+   */
+  const listing = {};
+  const listingLoading = false;
 
   const { mutate: handleBuy, isLoading: buyLoading } = useMutation({
     mutationFn: () => {
-      return marketplace!.buyoutListing(listingId, 1);
+      /***
+       * Write logic to execute the buy
+       */
+      return undefined;
     },
     onError: (err: any) => {
       console.error(err);

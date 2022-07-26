@@ -14,7 +14,11 @@ import { useAddress } from "@thirdweb-dev/react";
 
 export async function getServerSideProps(context: NextPageContext) {
   const address: string | string[] | undefined = context.query.address;
-  const data = await getNftsForOwner(alchemy, address?.toString() ?? "");
+
+  /***
+   * TODO: use alchemy to read out NFTs for owner
+   */
+  const data = {};
 
   return { props: { data: JSON.stringify(data), address } };
 }
@@ -26,7 +30,11 @@ const CollectionPage: NextPage<{ data: string; address: string }> = ({
   const router = useRouter();
   const userAddress = useAddress();
   const viewingOwnCollection = userAddress === address;
-  const fetchedData: OwnedNftsResponse = JSON.parse(data);
+
+  /***
+   * TODO: parse out JSON object from string passed into props
+   */
+  const fetchedData: OwnedNftsResponse = {};
 
   const nfts = fetchedData?.ownedNfts?.map((ownedNft: OwnedNft) => {
     const address = ownedNft.contract.address;
