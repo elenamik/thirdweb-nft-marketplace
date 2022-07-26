@@ -65,6 +65,9 @@ const CollectionPage: NextPage<{ data: string; address: string }> = ({
   }
   return (
     <div id="container" className="p-6 px-10">
+      <h1 className="text-center text-2xl font-normal text-slate-500 hover:font-semibold">
+        Collection at {userAddress}
+      </h1>
       <div id="container" className="flex w-full flex-wrap justify-center">
         {nfts}
       </div>
