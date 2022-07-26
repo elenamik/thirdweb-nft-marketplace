@@ -13,22 +13,21 @@ import { useActiveListings, useMarketplace } from "@thirdweb-dev/react";
 import { readAppContractAddresses } from "../config/contractAddresses";
 import { getEtherscanURL } from "../config/targetChainConfig";
 
-/***
- * TODOS:
- * // direct imports
- */
-
 const Home: NextPage = () => {
-  const marketplaceAddress = readAppContractAddresses("Marketplace");
-  const marketplace = useMarketplace(marketplaceAddress);
-  const { data, isLoading } = useActiveListings(marketplace);
+  /***
+   * TODO: replace isLoading and data with logic to read listings from marketplace
+   */
+  const isLoading = false;
+  const data = [];
 
   const router = useRouter();
+  const etherscanURL = getEtherscanURL();
 
   if (isLoading) {
     return <div className="large-text">Loading...</div>;
+  } else if (data.length === 0) {
+    return <div className="large-text">No Data To Show</div>;
   }
-  const etherscanURL = getEtherscanURL();
 
   return (
     <div className="flex flex-wrap justify-center">

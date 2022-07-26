@@ -15,8 +15,10 @@ export async function getServerSideProps(context: NextPageContext) {
     context.query.contractAddress;
   const tokenId: string | string[] | undefined = context.query.tokenId;
 
-  // TODO: wrap in try catch
-
+  /***
+   * TODO: read NFT data from Alchemy's SDK
+   */
+  const data = [];
   const data = await getNftMetadata(alchemy, {
     tokenId: tokenId?.toString() ?? "",
     contract: { address: contractAddress?.toString() ?? "" },
@@ -31,27 +33,13 @@ const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
   const NFT: Nft = JSON.parse(data);
   const [price, setPrice] = React.useState<number>(0.5);
 
-  const marketplace = useMarketplace(readAppContractAddresses("Marketplace"));
-
-  const handlePriceChange = (event: { target: { value: string } }) => {
-    const re = /^[0-9]+\.?[0-9]*$/;
-
-    const val = event.target.value;
-    if (val === "" || re.test(val)) {
-      setPrice(Number(val));
-    }
-  };
-
+  /***
+   * TODO: instantiate marketplace
+   */
   const createListing = async () => {
-    return marketplace!.direct.createListing({
-      assetContractAddress: NFT.contract.address,
-      tokenId: NFT.tokenId,
-      startTimestamp: new Date(),
-      listingDurationInSeconds: 86400,
-      quantity: 1,
-      currencyContractAddress: NATIVE_TOKEN_ADDRESS,
-      buyoutPricePerToken: price,
-    });
+    /***
+     * TODO: write function to create listing
+     */
   };
   const { mutate: create, isLoading } = useMutation({
     mutationFn: createListing,
@@ -63,6 +51,19 @@ const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
       router.push(`/listing/${txn.id}`);
     },
   });
+
+  const handlePriceChange = (event: { target: { value: string } }) => {
+    const re = /^[0-9]+\.?[0-9]*$/;
+
+    const val = event.target.value;
+    if (val === "" || re.test(val)) {
+      setPrice(Number(val));
+    }
+  };
+
+  if (!NFT) {
+    return <div className="large-text">No Data To Show</div>;
+  }
 
   return (
     <div

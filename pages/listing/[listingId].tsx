@@ -11,27 +11,45 @@ import {
 } from "@thirdweb-dev/react";
 import { formatDisplayAddress, hexToETH } from "../../web3utils";
 import { getEtherscanURL } from "../../config/targetChainConfig";
+import { useMutation } from "react-query";
+import {
+  TransactionResult,
+  TransactionResultWithId,
+} from "@thirdweb-dev/sdk/dist/src/core/types";
 
 const ListingPage: NextPage = () => {
   const router = useRouter();
-  const { listingId } = router.query as { listingId: string };
-
   const address = useAddress();
 
+  const { listingId } = router.query as { listingId: string };
+
+  /***
+   * TODO: instantiate marketplace and listing
+   */
   const marketplace = useMarketplace(readAppContractAddresses("Marketplace"));
+  const { data: listing, isLoading: listingLoading } = useListing(
+    marketplace,
+    listingId
+  );
 
-  const { data: listing, isLoading } = useListing(marketplace, listingId);
-  const etherscanURL = getEtherscanURL();
-
-  const handleBuy = async () => {
-    try {
-      await marketplace!.buyoutListing(listingId, 1);
+  const { mutate: handleBuy, isLoading: buyLoading } = useMutation({
+    mutationFn: () => {
+      /***
+       * TODO: add logic to execute buy
+       */
+      return undefined;
+    },
+    onError: (err: any) => {
+      console.error(err);
+      alert(`Error purchasing NFT:${err}`);
+    },
+    onSuccess: () => {
       router.push(`/collection/${address}`);
-    } catch (e: any) {
-      console.error(e);
-      alert(`Error purchasing NFT: ${e}`);
-    }
-  };
+    },
+  });
+
+  const isLoading = listingLoading || buyLoading;
+  const etherscanURL = getEtherscanURL();
 
   if (isLoading) {
     return <div className="p-6 text-2xl font-semibold">Loading...</div>;
