@@ -23,7 +23,7 @@ export async function getServerSideProps(context: NextPageContext) {
 const CollectionPage: NextPage<{ data: string }> = ({ data, address }) => {
   const router = useRouter();
   const userAddress = useAddress();
-  const viewingOwnCollection = userAddress === JSON.parse(address);
+  const viewingOwnCollection = userAddress === address;
   /***
    * TODO: replace fetchedData with data from server side props
    */

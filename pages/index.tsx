@@ -19,6 +19,7 @@ const Home: NextPage = () => {
    */
   const isLoading = false;
   const data = [];
+  // REPLACE THE ABOVE
 
   const router = useRouter();
   const etherscanURL = getEtherscanURL();
