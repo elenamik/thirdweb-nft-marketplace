@@ -31,7 +31,6 @@ const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
   /***
    * TODO: Instantiate marketplate
    */
-  const marketplace = useMarketplace(readAppContractAddresses("Marketplace"));
 
   const createListing = async () => {
     /***

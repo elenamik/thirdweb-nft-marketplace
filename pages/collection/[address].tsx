@@ -27,15 +27,14 @@ const CollectionPage: NextPage<{ data: string; address: string }> = ({
   data,
   address,
 }) => {
+  const router = useRouter();
+  const userAddress = useAddress();
+  const viewingOwnCollection = userAddress === address;
+
   /***
    * TODO: parse out JSON object from string passed into props
    */
   const fetchedData: OwnedNftsResponse = {};
-
-  const router = useRouter();
-
-  const userAddress = useAddress();
-  const viewingOwnCollection = userAddress === address;
 
   const nfts = fetchedData?.ownedNfts?.map((ownedNft: OwnedNft) => {
     const address = ownedNft.contract.address;
