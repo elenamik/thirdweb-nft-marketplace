@@ -1,13 +1,14 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
+A detailed walkthrough of this project can be found [https://blog.developerdao.com/](here).
 
-### Set up an NFT Marketplace in Thirdweb + point the app to the right place
+### Step 1: Set up an NFT Marketplace in Thirdweb + point the app to the right place
 You can use the config in here by default (Goerli, pointing to a marketplace contract I made on Thirdweb), but if you want to use your own,
-you can change the `targetChain` in `config/targetChain.ts` (checkout the definition of Thirdweb's [ChainId](https://github.com/thirdweb-dev/react/blob/77e30702d7938723486453e7383257028ed18c98/src/constants/chain.ts) to see the supported values),
+you can change the `targetChainId` in `config/targetChain.ts` (checkout the definition of Thirdweb's [ChainId](https://github.com/thirdweb-dev/react/blob/77e30702d7938723486453e7383257028ed18c98/src/constants/chain.ts) to see the supported values),
 and paste your contract marketplace contract address in `config/contractAddresses.ts`.
 
-### Set up Alchemy
+### Step 2: Set up Alchemy
 You can skip this step to begin with, but you will need to set this to get the `api/collection` page functional.
 
 Navigate over to the [Alchemy site](https://www.alchemy.com/) and set up a free tier account (takes 5 mins).
@@ -17,7 +18,7 @@ Next.js is already hooked up to read variables out of `.env.local` so there shou
 *** DO NOT *** commit your API key to you repository. You want to keep it private. `env.local` is .gitignore'd, so it will never be committed to your repository.
 Anytime you `git clone` the repository you will have to fill in this file again.
 
-### Start the server!
+### Step 3: Start the server!
 First, install the dependencies:
 
 ```bash
