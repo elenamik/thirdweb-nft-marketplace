@@ -1,7 +1,7 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
-A detailed walkthrough of this project can be found [https://blog.developerdao.com/](here).
+A detailed walkthrough of this project can be found at [https://blog.developerdao.com/](https://blog.developerdao.com/how-to-build-a-full-stack-nft-marketplace).
 
 ### Step 1: Set up an NFT Marketplace in Thirdweb + point the app to the right place
 You can use the config in here by default (Goerli, pointing to a marketplace contract I made on Thirdweb), but if you want to use your own,
